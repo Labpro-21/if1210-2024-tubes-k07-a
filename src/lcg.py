@@ -11,7 +11,7 @@ def lcg(a=48271, c=0, m=2**31-1, seed=None): # C++11 minstd_rand
     x0 = seed
 
     if seed is None:
-        x0 = int(os.getpid() + time.time()) # Seed diambil dari nilai ini agar seed selalu berbeda setiap waktu
+        x0 = int(os.getpid()*100 + time.time()*100) # Seed diambil dari nilai ini agar seed selalu berbeda setiap waktu
     else:
         x0 = seed # Seed adalah kondisi awal
 
@@ -31,4 +31,4 @@ def generate_number(x_prev, num_range=None): # Fungsi ini bakal ngambil x_prev d
 
 defaultlcg = lcg(a=48271, c=0, m=2**31-1, seed=None)
     
-print(generate_number(defaultlcg ,[0,11]))                                                                
+print(generate_number(defaultlcg ,[0,31]))                                                                
