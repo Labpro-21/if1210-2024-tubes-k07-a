@@ -31,4 +31,4 @@ def generate_number(x_prev, num_range=None): # Fungsi ini bakal ngambil x_prev d
 
 defaultlcg = lcg(a=48271, c=0, m=2**31-1, seed=None)
     
-print(generate_number(defaultlcg ,[0,31]))                                                                
+# print(generate_number(defaultlcg ,[0,31]))                                                                
