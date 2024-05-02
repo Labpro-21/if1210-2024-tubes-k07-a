@@ -7,13 +7,14 @@
 # ALGORITMA
 from monster import csv_to_array
 
-# sesuaikan filepath
-array_csv_user = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\test.csv")
-array_csv_monster = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\monster.csv")
+# array ini hanya untuk contoh karena sebelumnya sudah dipanggil di main
+# array_csv_user = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\user.csv")
+# array_csv_monster = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\monster.csv")
+# array_csv_monster_inventory = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\testmonster_inventory.csv")
 
-logged_in = False # delete setelah disatuin dengan F02 - Login
+# logged_in = False # delete setelah sudah di main (berarti di login harus ada return logged_in)
 
-def register():
+def register(logged_in):
     username = input("Masukkan username: ")
     password = input("Masukkan password: ")
     if logged_in:
@@ -48,19 +49,18 @@ def cekValid(username, password):
                 ada = True
                 break
         if not(ada):
-            # data_user untuk input di csv
+            # menyimpan data user baru
             data_user = [0 for i in range(5)]
             maks = -1
             for i in range(1, len(array_csv_user)):
                 if int(array_csv_user[i][0]) < maks:
                         maks = int(array_csv_user[i][0])
-            for i in range(5):
-                data_user[0] = str(int(array_csv_user[maks][0]) + 1) + ";"
-                data_user[1] = username + ";"
-                data_user[2] = password + ";"
-                data_user[3] = "agent;"
-                data_user[4] = "0"
-            write_csv_user(data_user) # mendaftarkan data user ke csv
+            data_user[0] = str(int(array_csv_user[maks][0]) + 1) + ";"
+            data_user[1] = username + ";"
+            data_user[2] = password + ";"
+            data_user[3] = "agent;"
+            data_user[4] = "0"
+            array_csv_user.append(data_user)
             # untuk pilih monster awal
             print("Silahkan pilih salah satu monster sebagai monster awalmu.")
             batas_awal = 9999
@@ -81,25 +81,11 @@ def cekValid(username, password):
             nama_monster_pilihan = array_csv_monster[monster_pilihan][1]
             print()
             print(f"Selamat datang Agent {username}. Mari kita mengalahkan Dr. Asep Spakbor dengan {nama_monster_pilihan}!")
-            write_csv_monster(data_user, monster_pilihan)
+            # menyimpan monster pilihan untuk write ke CSV saat command save dipanggil
+            data_monster_inventory = [0 for i in range(3)]
+            data_monster_inventory[0] = data_user[0]
+            data_monster_inventory[1] = str(monster_pilihan) + ";"
+            data_monster_inventory[2] = "1"
+            array_csv_monster_inventory.append(data_monster_inventory)
 
-def write_csv_user(data_user):
-    with open(r"c:\Data lain\BERTHA\Python\TUBES\test.csv", "a", newline="") as file: # filepath nanti diganti
-        for i in range(1):
-            for line in data_user:
-                file.write(line)
-            file.write('\n')
-
-def write_csv_monster(data_user, monster_pilihan):
-    with open(r"c:\Data lain\BERTHA\Python\TUBES\testmonster_inventory.csv", "a", newline="") as file: # filepath nanti diganti
-        data_monster = [0 for i in range(3)]
-        for i in range(3):
-            data_monster[0] = data_user[0]
-            data_monster[1] = str(monster_pilihan) + ";"
-            data_monster[2] = "1"
-        for i in range(1):
-            for line in data_monster:
-                file.write(line)
-            file.write('\n')
-
-register()
+register(logged_in)
