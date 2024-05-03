@@ -11,8 +11,8 @@ def check_login():
 
 def logout():
     if check_login():
-        logout = input("Apakah anda ingin keluar dari permainan? (iya / tidak): ")
-        if logout() == "iya":
+        log_out = input("Apakah anda ingin keluar dari permainan? (iya / tidak): ")
+        if log_out() == "iya":
             print("User berhasil melakukan logout.")
         else:
             print("Logout dibatalkan.")
