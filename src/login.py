@@ -8,30 +8,32 @@
 
 # ALGORITMA
 from monster import csv_to_array
-def login():
-    username_found = False
-    if not(logged_in):
+
+def login(logged_in):
+    if not logged_in:
+        array = csv_to_array (r"filepath")
+        username_found = False
         username = input('Username: ')
         password = input('Password: ')
         print()
-        for i in range (len(array[0])):
-            if (array[0][i] == username and array[1][i] == password):
+        for i in range(1, len(array)):
+            if array[i][1] == username and array[i][2] == password:
                 print('Login berhasil!')
                 print('Selamat datang Agent', username + '!')
                 print('Ketik "help" untuk melihat list command yang dapat kamu gunakan.')
-                logged_in = True
-                username_found = True
-                break
-            elif (array[0][i] == username):
+                return True  # return login status
+            elif array[i][1] == username and array[i][2] != password:
                 print('Password kamu salah!')
                 username_found = True
                 break
-        if not(username_found):
+        if not username_found:
             print('Username kamu belum terdaftar!')
             print('Lakukan registrasi terlebih dahulu sebelum melakukan login.')
-    else: #logged_in = True
+    else:  # logged_in = True
         print('Login gagal!')
-        username = 'udahlogin123' #nanti remove, nanti data username harus disimpan from prev
+        username = 'udahlogin123'  # nanti remove, nanti data username harus disimpan from prev
         print('Kamu sudah login dengan akun', username + ', lakukan logout terlebih dahulu sebelum melakukan login kembali.')
+    return logged_in  # return login status
 
-login()
+logged_in = False
+login(logged_in)
