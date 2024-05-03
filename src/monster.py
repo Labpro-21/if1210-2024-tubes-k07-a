@@ -44,5 +44,15 @@ def defense(defpower: float, enemydamage: float) -> float: # Fungsi untuk menghi
     damage_taken = enemydamage - (defpower/100)*enemydamage
     return damage_taken
 
+def level_buff(level: int, monster_id: int, monsterarray: list) -> list: # Buff atribut sesuai level. Digunakan pada saat battle
+    base_attack_power = monsterarray[monster_id][2]
+    base_def_power = monsterarray[monster_id][3]
+    base_hp = monsterarray[monster_id][4]
+
+    monsterarray[monster_id][2] = base_attack_power + (base_attack_power*((level*10)/100))
+    monsterarray[monster_id][3] = base_def_power + (base_def_power*((level*10)/100))
+    monsterarray[monster_id][4] = base_hp + (base_hp*((level*10)/100))
+    return monsterarray
+
 # print(attack(500))
 # print(csv_to_array("D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv"))
