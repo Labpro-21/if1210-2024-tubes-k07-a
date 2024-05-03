@@ -45,14 +45,15 @@ def defense(defpower: float, enemydamage: float) -> float: # Fungsi untuk menghi
     return damage_taken
 
 def level_buff(level: int, monster_id: int, monsterarray: list) -> list: # Buff atribut sesuai level. Digunakan pada saat battle
-    base_attack_power = monsterarray[monster_id][2]
-    base_def_power = monsterarray[monster_id][3]
-    base_hp = monsterarray[monster_id][4]
+    if level > 1:
+        monsterarray[monster_id][2] = int(monsterarray[monster_id][2]) + (int(monsterarray[monster_id][2])*((level*10)/100)) # Buff attack
+        monsterarray[monster_id][3] = int(monsterarray[monster_id][3]) + (int(monsterarray[monster_id][3])*((level*10)/100)) # Buff defense
+        monsterarray[monster_id][4] = int(monsterarray[monster_id][4]) + (int(monsterarray[monster_id][4])*((level*10)/100)) # Buff HP
+        return monsterarray
 
-    monsterarray[monster_id][2] = base_attack_power + (base_attack_power*((level*10)/100))
-    monsterarray[monster_id][3] = base_def_power + (base_def_power*((level*10)/100))
-    monsterarray[monster_id][4] = base_hp + (base_hp*((level*10)/100))
-    return monsterarray
+# monsterarray = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
+# print(monsterarray)
+# print(level_buff(5, 2, monsterarray))
 
 # print(attack(500))
 # print(csv_to_array("D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv"))
