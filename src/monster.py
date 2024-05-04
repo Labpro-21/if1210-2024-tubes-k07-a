@@ -44,12 +44,16 @@ def defense(defpower: float, enemydamage: float) -> float: # Fungsi untuk menghi
     damage_taken = enemydamage - (defpower/100)*enemydamage
     return damage_taken
 
-def level_buff(level: int, monster_id: int, monsterarray: list) -> list: # Buff atribut sesuai level. Digunakan pada saat battle
-    if level > 1:
-        monsterarray[monster_id][2] = int(monsterarray[monster_id][2]) + (int(monsterarray[monster_id][2])*((level*10)/100)) # Buff attack
-        monsterarray[monster_id][3] = int(monsterarray[monster_id][3]) + (int(monsterarray[monster_id][3])*((level*10)/100)) # Buff defense
-        monsterarray[monster_id][4] = int(monsterarray[monster_id][4]) + (int(monsterarray[monster_id][4])*((level*10)/100)) # Buff HP
-        return monsterarray
+def level_buff(level: int, user_battle_monster: list) -> list: # Buff atribut sesuai level. Digunakan pada saat battle, otomatis mengubah atribut attack, defense, HP menjadi integer
+    if level > 1: # Jika level lebih dari 1, atribut dibuff sesuai level, dan diubah menjadi integer
+        user_battle_monster[2] = int(user_battle_monster[2]) + (int(user_battle_monster[2])*((level*10)/100)) # Buff attack
+        user_battle_monster[3] = int(user_battle_monster[3]) + (int(user_battle_monster[3])*((level*10)/100)) # Buff defense
+        user_battle_monster[4] = int(user_battle_monster[4]) + (int(user_battle_monster[4])*((level*10)/100)) # Buff HP
+    else: # Jika level 1, atribut tidak dibuff, hanya diubah menjadi integer saja
+        user_battle_monster[2] = int(user_battle_monster[2])
+        user_battle_monster[3] = int(user_battle_monster[3])
+        user_battle_monster[4] = int(user_battle_monster[4])
+    return user_battle_monster
 
 # monsterarray = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
 # print(monsterarray)
