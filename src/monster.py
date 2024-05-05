@@ -30,13 +30,13 @@ def csv_to_array (filepath: str) -> list: # Fungsi untuk mengubah csv menjadi ar
     return array
 
 def attack(attackpower: float) -> float: # Fungsi untuk generate damage dari attack power
-    x = generate_number(defaultlcg, [0,2])
+    x = generate_number(lcg(a=48271, c=0, m=2**31-1, seed=None), [0,2])
     tanda = 0
     if x == 0:
         tanda = -1
     else:
         tanda = 1
-    pengali = generate_number(defaultlcg, [1, 31])
+    pengali = generate_number(lcg(a=48271, c=0, m=2**31-1, seed=None), [1, 31])
     damage = ((tanda*pengali)/100)*attackpower + attackpower
     return damage 
     
