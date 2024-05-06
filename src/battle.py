@@ -2,7 +2,6 @@
 # Writer: Adrian Sami Pratama
 # Hari, tanggal: 3 Mei 2024
 # Note: - Bug 1: Masih ada bug kalau monster musuh sama monster user sama. Kalau terjadi kasus ini, data musuh sama user bakal sama, jadi perhitungannya sama jg, ngebug
-#       - Bug 2: Nilai damage yang ada pas battle cuman ke-randomize sekali. Jadi pas turn 1, damage user sama bot di-randomize, cmn pas turn 2 dan seterusnya damage nya sama aja dan ga ke-randomize lagi. Ada yang tau solusinya kah? Apa yang salah?
 # Note: Masih ada fungsi potion yang kurang, sama belum nge-Floor HP terakhir jg. Satu lagi, di sini juga belum dibuat output menang sama kalah nya.
 
 # Kamus
