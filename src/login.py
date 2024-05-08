@@ -5,13 +5,14 @@
 # KAMUS
 # username, password: string
 # username_found: boolean
+# user_index: integer
 
 # ALGORITMA
 from monster import csv_to_array
 
 def login(logged_in):
     if not logged_in:
-        array = csv_to_array (r"filepath")
+        array = csv_to_array (r"E:\NAOMI\University\Sem 2\Programming Fundamentals\Tubes\user.csv")
         username_found = False
         username = input('Username: ')
         password = input('Password: ')
@@ -21,6 +22,7 @@ def login(logged_in):
                 print('Login berhasil!')
                 print('Selamat datang Agent', username + '!')
                 print('Ketik "help" untuk melihat list command yang dapat kamu gunakan.')
+                user_id = i
                 return True  # return login status
             elif array[i][1] == username and array[i][2] != password:
                 print('Password kamu salah!')
@@ -31,9 +33,5 @@ def login(logged_in):
             print('Lakukan registrasi terlebih dahulu sebelum melakukan login.')
     else:  # logged_in = True
         print('Login gagal!')
-        username = 'udahlogin123'  # nanti remove, nanti data username harus disimpan from prev
         print('Kamu sudah login dengan akun', username + ', lakukan logout terlebih dahulu sebelum melakukan login kembali.')
     return logged_in  # return login status
-
-logged_in = False
-login(logged_in)
