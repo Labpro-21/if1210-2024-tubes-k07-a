@@ -51,12 +51,18 @@ def laboratory(array, user_id):
                 price = 1250
             print((inventory_array[upgrade_id - 1][1]), 'akan diupdate ke level', (level + 1))
             print('Harga upgrade ini adalah', price)
-            if (price > coin_amt):
-                print('Upgrade gagal! Anda tidak memiliki cukup koin.')
-            else:
-                print('Upgrade berhasil!')
-                inventory_array[upgrade_id - 1][2] += 1 #level ditambah 1
-                array[user_id][4] -= price #coin_amt dikurang price
-                print((inventory_array[upgrade_id - 1][1]), 'sekarang ada di level', inventory_array[upgrade_id - 1][2] + '.')
+            confirm = input('Lanjutkan upgrade (Y/N): ')
+            while (confirm != 'Y') and (confirm != 'y') and (confirm != 'N') and (confirm != 'n'):
+                confirm = input('Lanjutkan upgrade (Y/N): ')
+            if (confirm == 'Y') or (confirm == 'y'):
+                if (price > coin_amt):
+                    print('Upgrade gagal! Anda tidak memiliki cukup koin.')
+                else:
+                    print('Upgrade berhasil!')
+                    inventory_array[upgrade_id - 1][2] += 1 #level ditambah 1
+                    array[user_id][4] -= price #coin_amt dikurang price
+                    print((inventory_array[upgrade_id - 1][1]), 'sekarang ada di level', inventory_array[upgrade_id - 1][2] + '.')
+            else: #(confirm == 'N') or (confirm == 'n')
+                print('Upgrade dibatalkan.')
 
 laboratory(array, user_id)
