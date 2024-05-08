@@ -10,12 +10,12 @@
 
 # Algoritma
 from monster import *
-
-monsterarray = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
+from potion import *
+monsterarray = csv_to_array(r"if1210-2024-tubes-k07-a\data\monster.csv")
 monster_muncul = generate_number(defaultlcg, [1,6])
-item_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\item_inventory.csv")
-monster_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster_inventory.csv")
-user_id = 3
+item_inventory = csv_to_array(r"if1210-2024-tubes-k07-a\data\item_inventory.csv")
+monster_inventory = csv_to_array(r"if1210-2024-tubes-k07-a\data\monster_inventory.csv")
+user_id = 4
 
 def pilih_monster(user_id: int, monster_inventory: list, monsterarray: list):
     count = 1 # Nomor list
@@ -139,8 +139,8 @@ while True: # Validasi pilihan monster
         print("Pilihan nomor tidak tersedia!")
 
 # Sudah memilih monster yang akan bertarung, memasukkan semua variabel untuk dipake kalkulasi battle
-user_battle_monster = pilihan_monster[monster_dipilih-1] # Memasukkan data array monster user yang dipilih
-bot_battle_monster = monsterarray[monster_muncul] # Memasukkan data array monster bot yang akan melawan user
+user_battle_monster = pilihan_monster[monster_dipilih-1].copy() # Memasukkan data array monster user yang dipilih
+bot_battle_monster = monsterarray[monster_muncul].copy() # Memasukkan data array monster bot yang akan melawan user
 user_battle_monster_level = 1
 for i in range(1, len(monster_inventory)): # Memasukkan data level monster user
     if user_id == int(monster_inventory[i][0]) and int(monster_inventory[i][1]) == int(user_battle_monster[0]):
@@ -162,27 +162,45 @@ base_HP_bot_monster = bot_battle_monster[4]
 # Proses battle
 gambar_monster_user()
 monster_dipilih_user(user_battle_monster_level, user_battle_monster)
+status_potion = {"strength":False,"resilience":False,"healing":False}
 turn_counter = 1
+kabur = False
 while base_HP_user_monster > 0 and base_HP_bot_monster > 0:
-
     # Turn user
     output_user_turn(turn_counter, user_battle_monster[1])
-    user_action = int(input("Pilih perintah: ")) # Aksi yang dipilih user pada turn
-    if user_action == 1: # Jika user memilih attack
-        user_attack_turn(user_battle_monster[1], bot_battle_monster[1]) # User menyerang bot
-        damage = attack(base_atk_user_monster) # Randomize damage +- 30%
-        damage_reduction = defense(base_def_bot_monster, damage) # Damage reduction akibat atribut defense
-        damage_after_reduction = damage - defense(base_def_bot_monster, damage) # Damage setelah dikurangi defense musuh
-        base_HP_bot_monster -= damage_after_reduction # HP berkurang karena damage musuh
-        attack_result(bot_battle_monster, user_battle_monster, damage, damage_reduction, damage_after_reduction, base_HP_bot_monster, user_battle_monster_level, 1)
-    # elif user_action == 2: # Jika user memilih use potion
-
-    elif user_action == 3: # Jika user memilih quit
-        print("Anda berhasil kabur dari BATTLE!")
+    while(True):
+        user_action = int(input("Pilih perintah: ")) # Aksi yang dipilih user pada turn
+        if user_action == 1: # Jika user memilih attack
+            user_attack_turn(user_battle_monster[1], bot_battle_monster[1]) # User menyerang bot
+            damage = attack(base_atk_user_monster) # Randomize damage +- 30%
+            damage_reduction = defense(base_def_bot_monster, damage) # Damage reduction akibat atribut defense
+            damage_after_reduction = damage - defense(base_def_bot_monster, damage) # Damage setelah dikurangi defense musuh
+            base_HP_bot_monster -= damage_after_reduction # HP berkurang karena damage musuh
+            attack_result(bot_battle_monster, user_battle_monster, damage, damage_reduction, damage_after_reduction, base_HP_bot_monster, user_battle_monster_level, 1)
+            break
+        elif user_action == 2: # Jika user memilih use potion
+            item_inventory, status_potion, code = use_potion(user_id,item_inventory,status_potion,user_battle_monster[1])
+            if(code==1):
+                base_atk_user_monster += int(base_atk_user_monster*5/100)
+                break
+            elif(code==2):
+                base_def_user_monster += int(base_def_user_monster*5/100)
+                break
+            elif(code==3):
+                base_HP_user_monster += int(base_HP_user_monster*25/100)
+                if(base_HP_user_monster>user_battle_monster[4]):
+                    base_HP_user_monster = user_battle_monster[4]
+                break
+            else: # code == 0, artinya user memilih Cancel pada potion
+                pass
+        elif user_action == 3: # Jika user memilih quit
+            kabur = True
+            print("Anda berhasil kabur dari BATTLE!")
+            break
+        else:
+            print("Perintah tidak valid, ulangi!")
+    if(kabur):
         break
-    else:
-        print("Perintah tidak valid, ulangi!")
-    
     # Turn bot
     output_bot_turn(turn_counter, bot_battle_monster[1], user_battle_monster[1])
     damage = attack(base_atk_bot_monster) # Randomize damage +- 30%
