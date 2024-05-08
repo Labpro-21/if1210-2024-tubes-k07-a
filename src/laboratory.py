@@ -9,6 +9,7 @@
 # monster_id : integer
 # upgrade_id : integer 
 # level: integer
+# confirm: string
 
 # ALGORITMA
 import login
