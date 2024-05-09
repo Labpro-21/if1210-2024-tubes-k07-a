@@ -1,3 +1,7 @@
+# PROGRAM F16 - Exit
+# Writer: Bertha Soliany Frandi
+# Tanggal: 6 Mei 2024
+
 from save import save
 
 def exit():
