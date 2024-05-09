@@ -36,4 +36,4 @@ def login(logged_in, user_id, array):
     else:  # logged_in = True
         print('Login gagal!')
         print('Kamu sudah login dengan akun', username + ', lakukan logout terlebih dahulu sebelum melakukan login kembali.')
-    return logged_in, user_id, array  # return login status
+    return logged_in, user_id, array
