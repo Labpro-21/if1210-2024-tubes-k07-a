@@ -17,26 +17,26 @@ def save():
     print()
 
     # pengecekan keberadaan folder parent ./data
-    parent_check = os.path.exists("C:/Data lain//BERTHA/Python/TUBES/data")
+    parent_check = os.path.exists("./data")
     if parent_check == False:
-        os.makedirs("C:/Data lain//BERTHA/Python/TUBES/data")
+        os.makedirs("./data")
         print("Membuat folder data...")
         time.sleep(1.5)
         
     # pengecekan nama folder pada folder parent ./data
-    folder_check = os.path.exists(f"C:/Data lain//BERTHA/Python/TUBES/data/{folder}")
+    folder_check = os.path.exists("./data/"+folder)
     if folder_check == False:
         os.makedirs(f"./data/{folder}")
         print(f"Membuat folder data/{folder}")
         time.sleep(2)
 
     # overwrite data
-    write_csv(f"./data/{folder}/user.csv", array_csv_user)
-    write_csv(f"./data/{folder}/monster.csv", array_csv_monster)
-    write_csv(f"./data/{folder}/item_inventory.csv", array_csv_item_inventory)
-    write_csv(f"./data/{folder}/monster_inventory.csv", array_csv_monster_inventory)
-    write_csv(f"./data/{folder}/item_shop.csv", array_csv_item_shop)
-    write_csv(f"./data/{folder}/monster_shop.csv", array_csv_monster_shop)
+    write_csv(f"./data/{folder}/user.csv", array_user)
+    write_csv(f"./data/{folder}/monster.csv", array_monster)
+    write_csv(f"./data/{folder}/item_inventory.csv", array_item_inventory)
+    write_csv(f"./data/{folder}/monster_inventory.csv", array_monster_inventory)
+    write_csv(f"./data/{folder}/item_shop.csv", array_item_shop)
+    write_csv(f"./data/{folder}/monster_shop.csv", array_monster_shop)
 
     print(f"Berhasil menyimpan data di folder data/{folder}!")
 
