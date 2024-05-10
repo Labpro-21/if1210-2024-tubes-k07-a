@@ -8,25 +8,21 @@
 # user_id: integer
 
 # ALGORITMA
-from monster import csv_to_array
-
 user_id = 0
-user_id = []
-def login(logged_in, user_id, array):
+def login(logged_in, user_id, array_user):
     if not logged_in:
-        array = csv_to_array (r"E:\NAOMI\University\Sem 2\Programming Fundamentals\Tubes\user.csv")
         username_found = False
         username = input('Username: ')
         password = input('Password: ')
         print()
-        for i in range(1, len(array)):
-            if array[i][1] == username and array[i][2] == password:
+        for i in range(1, len(array_user)):
+            if array_user[i][1] == username and array_user[i][2] == password:
                 print('Login berhasil!')
                 print('Selamat datang Agent', username + '!')
                 print('Ketik "help" untuk melihat list command yang dapat kamu gunakan.')
                 user_id = i
                 return True  # return login status
-            elif array[i][1] == username and array[i][2] != password:
+            elif array_user[i][1] == username and array_user[i][2] != password:
                 print('Password kamu salah!')
                 username_found = True
                 break
@@ -36,4 +32,4 @@ def login(logged_in, user_id, array):
     else:  # logged_in = True
         print('Login gagal!')
         print('Kamu sudah login dengan akun', username + ', lakukan logout terlebih dahulu sebelum melakukan login kembali.')
-    return logged_in, user_id, array
+    return logged_in, user_id
