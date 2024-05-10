@@ -5,13 +5,6 @@
 # KAMUS
 
 # ALGORITMA
-# from monster import csv_to_array
-# # array ini hanya untuk contoh karena sebelumnya sudah dipanggil di main/load
-# array_csv_user = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\user.csv")
-# array_csv_monster = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\monster.csv")
-# array_csv_monster_inventory = csv_to_array(r"c:\Data lain\BERTHA\Python\TUBES\testmonster_inventory.csv")
-# logged_in = False # delete setelah sudah di main (berarti di login harus ada return logged_in)
-
 def register(logged_in: str):
     username = input("Masukkan username: ")
     password = input("Masukkan password: ")
@@ -48,9 +41,9 @@ def cekValid(username: str, password:str):
             break
     # syarat username yang tidak boleh sama seperti agent lain yang sudah ada
     ada = False
-    for i in range(len(array_csv_user)):
+    for i in range(len(array_user)):
         while True:
-            if array_csv_user[i][1] == username:
+            if array_user[i][1] == username:
                 print(f"Username sudah terpakai, silahkan gunakan username lain.")
                 ada = True
                 username = input("Masukkan username: ")
@@ -63,19 +56,19 @@ def cekValid(username: str, password:str):
         # menyimpan data user baru
         data_user = [0 for i in range(5)]
         maks = -1
-        for i in range(1, len(array_csv_user)):
-            if int(array_csv_user[i][0]) < maks:
-                    maks = int(array_csv_user[i][0])
-        data_user = [str(int(array_csv_user[maks][0]) + 1), username, password, 'agent', '0']
-        array_csv_user.append(data_user) # menyimpan user baru ke array csv user
+        for i in range(1, len(array_user)):
+            if int(array_user[i][0]) < maks:
+                    maks = int(array_user[i][0])
+        data_user = [str(int(array_user[maks][0]) + 1), username, password, 'agent', '0']
+        array_user.append(data_user) # menyimpan user baru ke array csv user
         # untuk pilih monster awal
         print("Silahkan pilih salah satu monster sebagai monster awalmu.")
         batas_awal = 9999
         batas_akhir = -1
-        for i in range(len(array_csv_monster)):
+        for i in range(len(array_monster)):
             if i != 0:
-                print(array_csv_monster[i][0],".",end=" ")
-                print(array_csv_monster[i][1])
+                print(array_monster[i][0],".",end=" ")
+                print(array_monster[i][1])
                 if i <= batas_awal:
                     batas_awal = i
                 if i >= batas_akhir:
@@ -85,12 +78,12 @@ def cekValid(username: str, password:str):
         while monster_pilihan < batas_awal or monster_pilihan > batas_akhir:
             print("input tidak valid. Coba pilih ulang.")
             monster_pilihan = int(input("Monster pilihanmu: "))
-        nama_monster_pilihan = array_csv_monster[monster_pilihan][1]
+        nama_monster_pilihan = array_monster[monster_pilihan][1]
         print()
         print(f"Selamat datang Agent {username}. Mari kita mengalahkan Dr. Asep Spakbor dengan {nama_monster_pilihan}!")
         # menyimpan monster pilihan ke array csv monster_inventory
         data_monster_inventory = [data_user[0], str(monster_pilihan), '1']
-        array_csv_monster_inventory.append(data_monster_inventory)
+        array_monster_inventory.append(data_monster_inventory)
 
 def cekPassword(password: str) -> str:
     pw = True
