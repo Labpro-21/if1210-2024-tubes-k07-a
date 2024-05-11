@@ -133,6 +133,7 @@ Level     : 1
 
 """)
 
+# Mulai program
 munculmonster(monsterarray)
 print(r"============ MONSTER LIST ============")
 pilihan_monster = pilih_monster(user_id, monster_inventory, monsterarray)
