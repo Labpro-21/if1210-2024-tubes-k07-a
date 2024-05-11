@@ -131,10 +131,10 @@ DEF Power : {monsterarray[monster_muncul][3]}
 HP        : {monsterarray[monster_muncul][4]}
 Level     : 1
 
-============ MONSTER LIST ============
 """)
 
 munculmonster(monsterarray)
+print(r"============ MONSTER LIST ============")
 pilihan_monster = pilih_monster(user_id, monster_inventory, monsterarray)
 while True: # Validasi pilihan monster
     bisa = False
