@@ -1,7 +1,7 @@
 # PROGRAM F03 - Logout
 # Writer: Felicia Kannitha Ruth
 # Hari, tanggal: 1 Mei 2024
-# Note: logout bisa dilakukan saat login sudah dilakukan
+# Note: logout dilakukan saat login sudah dilaksanakan
 
 # Algoritma
 from monster import csv_to_array
