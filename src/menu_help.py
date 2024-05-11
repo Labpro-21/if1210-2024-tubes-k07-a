@@ -5,7 +5,7 @@
 # login : boolean
 # role, username : string
 
-def help(login,role,username):
+def help(login: bool,role: str,username: str):
     print()
     print("=========== HELP ===========")
     print()
