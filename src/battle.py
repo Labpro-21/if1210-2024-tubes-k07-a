@@ -15,7 +15,7 @@ monsterarray = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-20
 monster_muncul = generate_number(defaultlcg, [1,len(monsterarray)])
 item_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\item_inventory.csv")
 monster_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster_inventory.csv")
-user_id = 4
+user_id = 3
 
 def pilih_monster(user_id: int, monster_inventory: list, monsterarray: list):
     count = 1 # Nomor list
@@ -135,7 +135,7 @@ Level     : 1
 """)
 
 munculmonster(monsterarray)
-pilihan_monster = pilih_monster(3, monster_inventory, monsterarray)
+pilihan_monster = pilih_monster(user_id, monster_inventory, monsterarray)
 while True: # Validasi pilihan monster
     bisa = False
     monster_dipilih = int(input("Pilih monster untuk bertarung: "))
