@@ -1,7 +1,7 @@
 # Program: Shop management
 # Writer: Felicia Kannitha Ruth
 # Hari, tanggal: 11 Mei 2024
-# Note: nambahin hapus update monster id nya belum ke detect
+# Note: -
 
 # ALGORITMA
 # import
@@ -222,6 +222,3 @@ def shop_management(shop):
 
 shop = create_shop("Phineas")
 shop_management(shop)
-tampilkan_border(data)
-show_id_pot()
-show_id_mons()
