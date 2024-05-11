@@ -1,8 +1,7 @@
 # PROGRAM Simulasi Battle Turn Based
 # Writer: Adrian Sami Pratama
 # Hari, tanggal: 3 Mei 2024
-# Note: - Bug 1: Masih ada bug kalau monster musuh sama monster user sama. Kalau terjadi kasus ini, data musuh sama user bakal sama, jadi perhitungannya sama jg, ngebug
-# Note: Masih ada fungsi potion yang kurang, sama belum nge-Floor HP terakhir jg. Satu lagi, di sini juga belum dibuat output menang sama kalah nya.
+# Note: All bug fixed (harusnya)
 
 # Kamus
 # monsterarray, item_inventory, monster_inventory: list
@@ -11,10 +10,11 @@
 # Algoritma
 from monster import *
 from potion import *
-monsterarray = csv_to_array(r"if1210-2024-tubes-k07-a\data\monster.csv")
-monster_muncul = generate_number(defaultlcg, [1,6])
-item_inventory = csv_to_array(r"if1210-2024-tubes-k07-a\data\item_inventory.csv")
-monster_inventory = csv_to_array(r"if1210-2024-tubes-k07-a\data\monster_inventory.csv")
+import math
+monsterarray = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
+monster_muncul = generate_number(defaultlcg, [1,len(monsterarray)])
+item_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\item_inventory.csv")
+monster_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster_inventory.csv")
 user_id = 4
 
 def pilih_monster(user_id: int, monster_inventory: list, monsterarray: list):
@@ -78,16 +78,25 @@ def attack_result(enemy_battle_monster: list, user_battle_monster: list, user_da
         tanda = 1
     if tanda == 0:
         tanda = '-'
-    else:
-        tanda = '+'
-    print(f"""
+        print(f"""
 Name      : {enemy_battle_monster[1]}
 ATK Power : {enemy_battle_monster[2]}
 DEF Power : {enemy_battle_monster[3]}
 HP        : {base_HP_enemy_monster}
 Level     : {enemy_battle_monster_level}
 
-Penjelasan: ATT: {user_damage} ({tanda}{user_battle_monster_level*10}%), Reduced by: {damage_reduction} ({enemy_battle_monster[3]}%), ATT Results: {damage_after_reduction}
+Penjelasan: ATT: {user_damage} ({tanda}{math.floor((user_battle_monster[2]-user_damage)/user_battle_monster[2]*100)}%), Reduced by: {damage_reduction} ({enemy_battle_monster[3]}%), ATT Results: {damage_after_reduction}
+""")
+    else:
+        tanda = '+'
+        print(f"""
+Name      : {enemy_battle_monster[1]}
+ATK Power : {enemy_battle_monster[2]}
+DEF Power : {enemy_battle_monster[3]}
+HP        : {base_HP_enemy_monster}
+Level     : {enemy_battle_monster_level}
+
+Penjelasan: ATT: {user_damage} ({tanda}{math.floor((user_damage-user_battle_monster[2])/user_battle_monster[2]*100)}%), Reduced by: {damage_reduction} ({enemy_battle_monster[3]}%), ATT Results: {damage_after_reduction}
 """)
 
 def user_attack_turn(user_monster_name: str, bot_monster_name: str): # Untuk menampilkan 
@@ -112,7 +121,7 @@ def gambar_monster_musuh(): # Untuk mengeprint gambar monster yang muncul
 """)
 
 def munculmonster(monsterarray: list): # Untuk menampilkan data monster yang muncul
-    gambar_monster_musuh()
+    gambar_monster(monsterarray[monster_muncul][0])
     print(f"""
 RAWRRR, Monster {monsterarray[monster_muncul][1]} telah muncul !!!
 
@@ -160,7 +169,7 @@ base_def_bot_monster = bot_battle_monster[3]
 base_HP_bot_monster = bot_battle_monster[4]
 
 # Proses battle
-gambar_monster_user()
+gambar_monster(user_battle_monster[0])
 monster_dipilih_user(user_battle_monster_level, user_battle_monster)
 status_potion = {"strength":False,"resilience":False,"healing":False}
 turn_counter = 1
@@ -172,10 +181,12 @@ while base_HP_user_monster > 0 and base_HP_bot_monster > 0:
         user_action = int(input("Pilih perintah: ")) # Aksi yang dipilih user pada turn
         if user_action == 1: # Jika user memilih attack
             user_attack_turn(user_battle_monster[1], bot_battle_monster[1]) # User menyerang bot
-            damage = attack(base_atk_user_monster) # Randomize damage +- 30%
+            damage = attack_user(base_atk_user_monster) # Randomize damage +- 30%
             damage_reduction = defense(base_def_bot_monster, damage) # Damage reduction akibat atribut defense
             damage_after_reduction = damage - defense(base_def_bot_monster, damage) # Damage setelah dikurangi defense musuh
-            base_HP_bot_monster -= damage_after_reduction # HP berkurang karena damage musuh
+            base_HP_bot_monster = math.floor(base_HP_bot_monster - damage_after_reduction) # HP berkurang karena damage musuh
+            if base_HP_bot_monster <= 0:
+                base_HP_bot_monster = 0
             attack_result(bot_battle_monster, user_battle_monster, damage, damage_reduction, damage_after_reduction, base_HP_bot_monster, user_battle_monster_level, 1)
             break
         elif user_action == 2: # Jika user memilih use potion
@@ -201,12 +212,27 @@ while base_HP_user_monster > 0 and base_HP_bot_monster > 0:
             print("Perintah tidak valid, ulangi!")
     if(kabur):
         break
+
+    if base_HP_bot_monster == 0: # Jika saat user menyerang, musuh sudah mati
+        break
+
     # Turn bot
     output_bot_turn(turn_counter, bot_battle_monster[1], user_battle_monster[1])
-    damage = attack(base_atk_bot_monster) # Randomize damage +- 30%
+    damage = attack_bot(base_atk_bot_monster) # Randomize damage +- 30%
     damage_reduction = defense(base_def_user_monster, damage) # Damage reduction akibat atribut defense
     damage_after_reduction = damage - defense(base_def_user_monster, damage) # Damage setelah dikurangi defense musuh
-    base_HP_user_monster -= damage_after_reduction # HP berkurang karena damage musuh
+    base_HP_user_monster = math.floor(base_HP_user_monster - damage_after_reduction) # HP berkurang karena damage musuh
+    if base_HP_user_monster <= 0:
+        base_HP_user_monster = 0
     attack_result(user_battle_monster, bot_battle_monster, damage, damage_reduction, damage_after_reduction, base_HP_user_monster, 1, user_battle_monster_level)
 
     turn_counter += 1
+
+# Selesai battle
+if base_HP_bot_monster == 0: # Kasus menang
+    OC = generate_number(defaultlcg, [5, 31])
+    print(f"Selamat, Anda berhasil mengalahkan monster {bot_battle_monster[1]} !!!")
+    print(f"OC yang diperoleh: {OC}")
+
+elif base_HP_user_monster == 0: # Kasus kalah
+    print(f"Yahhh, Anda dikalahkan monster {bot_battle_monster[1]}. Jangan menyerah, coba lagi !!!")
