@@ -14,7 +14,7 @@ from src.login import *
 from src.save import *
 from src.exit import *
 # from src.shop_management import *
-# from src.monster_management import *
+from src.monster_management import *
 # from src.inventory import *
 # from src.battle import *
 # from src.arena import *
@@ -24,7 +24,7 @@ from src.exit import *
 parser = argparse.ArgumentParser(description="load data dari folder yang dipilih")
 parser.add_argument("folder", help="nama folder yang berisi data yang ingin di load")
 args = parser.parse_args()
-folder_path = "./data/"+args.folder
+folder_path = "./"+args.folder
 
 # mengecek apakah folder ada
 check_folder = os.path.exists(folder_path)
@@ -52,6 +52,7 @@ if check_folder == True:
     # meminta perintah berikutnya
     print('Ketik "HELP" untuk melihat menu')
     perintah = input(">>> ")
+    monster_management(array_monster)
     while True:
         if logged_in == False:
             if perintah == "HELP" or perintah == "MENU":
@@ -66,6 +67,7 @@ if check_folder == True:
                 keluar = exit()
                 if keluar == True:
                     save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
+                break
             else:
                 print("perintah tidak valid!")
         elif logged_in == True:
@@ -83,11 +85,13 @@ if check_folder == True:
                 elif perintah == "SHOP MANAGEMENT": 
                     pass
                 elif perintah == "MONSTER MANAGEMENT":
-                    pass
+                    array_monster = monster_management(array_monster)
                 elif perintah == "SAVE":
                     save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 elif perintah == "EXIT":
-                    pass
+                    keluar = exit()
+                    if keluar == True:
+                        save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                     break
                 else:
                     print("Perintah tidak valid!")
@@ -113,7 +117,9 @@ if check_folder == True:
                 elif perintah == "SAVE":
                     save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 elif perintah == "EXIT":
-                    pass
+                    keluar = exit()
+                    if keluar == True:
+                        save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                     break
                 else:
                     print("Perintah tidak valid!")
