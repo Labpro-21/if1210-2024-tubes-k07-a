@@ -11,9 +11,9 @@
 # monster_type, monster_def_power, monster_atk_power, monster_hp, confirm : string
 
 # ALGORITMA
-def is_integer(user_input):
-    for char in user_input:
-        if (ord(char) <= ord('0')) or (ord(char) >= ord('9')):
+def is_integer(user_input: str):
+    for char in str(user_input):
+        if (ord(char) < ord('0')) or (ord(char) > ord('9')):
             return False
     return True
 
@@ -63,7 +63,7 @@ def monster_management(array_monster):
                 if(int(monster_def_power) >= 0 and (int(monster_def_power) <= 50)):
                     monster_def_power = int(monster_def_power)
                     break
-            monster_def_power = input('Masukkan DEF Power: ')
+            monster_def_power = input('Masukkan DEF Power (0-50): ')
 
         monster_hp = input('Masukkan HP: ')
         while True: 
@@ -85,7 +85,7 @@ def monster_management(array_monster):
             confirm = input('Lanjutkan upgrade (Y/N): ')
         if (confirm == 'Y') or (confirm == 'y'):
             #add new monster details
-            temporary_array = [(array_monster [len(array_monster) - 1][0] + 1), monster_type, int(monster_atk_power), int(monster_def_power), int(monster_hp)] 
+            temporary_array = [(int(array_monster[len(array_monster) - 1][0]) + 1), monster_type, int(monster_atk_power), int(monster_def_power), int(monster_hp)] 
             array_monster.append(temporary_array)
             print('Monster berhasil ditambahkan ke database!')
         else: #(confirm == 'N') or (confirm == 'n'):

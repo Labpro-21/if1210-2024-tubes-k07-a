@@ -52,7 +52,6 @@ if check_folder == True:
     # meminta perintah berikutnya
     print('Ketik "HELP" untuk melihat menu')
     perintah = input(">>> ")
-    monster_management(array_monster)
     while True:
         if logged_in == False:
             if perintah == "HELP" or perintah == "MENU":
@@ -72,9 +71,8 @@ if check_folder == True:
                 print("perintah tidak valid!")
         elif logged_in == True:
             # mendapatkan role user yang sedang login
-            for i in range(5):
-                if username == array_user[i][1]:
-                    role = array_user[i][3]
+            username = array_user[user_id][1]
+            role = array_user[user_id][3]
             if role == "admin":
                 if perintah == "HELP" or perintah == "MENU":
                     help(logged_in,role,username)
@@ -123,6 +121,7 @@ if check_folder == True:
                     break
                 else:
                     print("Perintah tidak valid!")
+
         perintah = input(">>> ")
             
 
