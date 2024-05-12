@@ -2,20 +2,35 @@
 # Writer: Bertha Soliany Frandi
 # Tanggal: 10 Mei 2024
 
-# Note : Belum ada pengecekan ketika user tidak memberikan nama folder (Masih )
+# Note : Belum ada pengecekan ketika user tidak memberikan nama folder (Masih "error: the following arguments are required: folder")
+
+import os
+import time
 import argparse
+from src.load import csv_to_array
+from src.menu_help import *
+from src.register import *
+from src.login import *
+from src.save import *
+from src.exit import *
+# from src.shop_management import *
+# from src.monster_management import *
+# from src.inventory import *
+# from src.battle import *
+# from src.arena import *
+# from src.shopcurrency import *
+# from src.laboratory import *
+
 parser = argparse.ArgumentParser(description="load data dari folder yang dipilih")
 parser.add_argument("folder", help="nama folder yang berisi data yang ingin di load")
 args = parser.parse_args()
 folder_path = "./data/"+args.folder
 
 # mengecek apakah folder ada
-import os
 check_folder = os.path.exists(folder_path)
 if check_folder == True:
     print("Loading...")
     
-    from src.load import csv_to_array
     array_user = csv_to_array(folder_path+"/user.csv")
     array_monster = csv_to_array(folder_path+"/monster.csv")
     array_monster_inventory = csv_to_array(folder_path+"/monster_inventory.csv")
@@ -23,29 +38,17 @@ if check_folder == True:
     array_item_inventory = csv_to_array(folder_path+"/item_inventory.csv")
     array_item_shop = csv_to_array(folder_path+"/item_shop.csv")
 
-    import time
     time.sleep(2)
 
     print("Selamat datang di program OWCA!")
     time.sleep(1)
     print()
 
-    from src.menu_help import *
-    from src.register import *
-    # from src.login import *
-    # from src.save import *
-    # from src.exit import *
-    # from src.shop_management import *
-    # from src.monster_management import *
-    # from src.inventory import *
-    # from src.battle import *
-    # from src.arena import *
-    # from src.shopcurrency import *
-    # from src.laboratory import *
     # inisialisasi
     logged_in = False
     username = ''
     role = ''
+    user_id = 0
     # meminta perintah berikutnya
     print('Ketik "HELP" untuk melihat menu')
     perintah = input(">>> ")
@@ -56,12 +59,13 @@ if check_folder == True:
             elif perintah == "REGISTER":   
                 array_monster_inventory = register(logged_in,array_user, array_monster, array_monster_inventory)
             elif perintah == "LOGIN":
-                pass
+                logged_in, user_id = login(logged_in,user_id,array_user)
             elif perintah == "SAVE":
-                pass
+                save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
             elif perintah == "EXIT":
-                pass
-                break
+                keluar = exit()
+                if keluar == True:
+                    save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
             else:
                 print("perintah tidak valid!")
         elif logged_in == True:
@@ -75,13 +79,13 @@ if check_folder == True:
                 elif perintah == "REGISTER":
                     register(logged_in,array_user, array_monster, array_monster_inventory)
                 elif perintah == "LOGIN":
-                    pass
+                    logged_in, user_id = login(logged_in,user_id,array_user)
                 elif perintah == "SHOP MANAGEMENT": 
                     pass
                 elif perintah == "MONSTER MANAGEMENT":
                     pass
                 elif perintah == "SAVE":
-                    pass
+                    save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 elif perintah == "EXIT":
                     pass
                     break
@@ -91,7 +95,7 @@ if check_folder == True:
                 if perintah == "REGISTER":
                     register(logged_in,array_user, array_monster, array_monster_inventory)
                 elif perintah == "LOGIN":
-                    pass
+                    logged_in, user_id = login(logged_in,user_id,array_user)
                 elif perintah == "LOGOUT":
                     pass
                 elif perintah == "HELP" or perintah == "MENU":
@@ -107,7 +111,7 @@ if check_folder == True:
                 elif perintah == "LABORATORY":
                     pass
                 elif perintah == "SAVE":
-                    pass
+                    save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 elif perintah == "EXIT":
                     pass
                     break

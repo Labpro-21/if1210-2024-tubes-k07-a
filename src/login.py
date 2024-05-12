@@ -8,8 +8,7 @@
 # user_id: integer
 
 # ALGORITMA
-user_id = 0
-def login(logged_in, user_id, array_user):
+def login(logged_in: bool, user_id: int, array_user: list):
     if not logged_in:
         username_found = False
         username = input('Username: ')
@@ -21,7 +20,7 @@ def login(logged_in, user_id, array_user):
                 print('Selamat datang Agent', username + '!')
                 print('Ketik "help" untuk melihat list command yang dapat kamu gunakan.')
                 user_id = i
-                return True  # return login status
+                return True, user_id  # return login status dan user_id
             elif array_user[i][1] == username and array_user[i][2] != password:
                 print('Password kamu salah!')
                 username_found = True
