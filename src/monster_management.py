@@ -17,7 +17,7 @@ def is_integer(user_input: str):
             return False
     return True
 
-def monster_management(array_monster):
+def monster_management(array_monster: list):
     print('Selamat datang di database monster!')
     print('1. Tampilkan semua monster')
     print('2. Tambahkan monster baru')

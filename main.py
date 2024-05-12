@@ -15,7 +15,7 @@ from src.save import *
 from src.exit import *
 # from src.shop_management import *
 from src.monster_management import *
-# from src.inventory import *
+from src.inventory import *
 # from src.battle import *
 # from src.arena import *
 # from src.shopcurrency import *
@@ -103,7 +103,7 @@ if check_folder == True:
                 elif perintah == "HELP" or perintah == "MENU":
                     help(logged_in,role,username)
                 elif perintah == "INVENTORY":
-                    pass
+                    inventory(array_user[user_id], array_item_inventory, array_monster_inventory, array_monster)
                 elif perintah == "BATTLE":
                     pass
                 elif perintah == "ARENA":
