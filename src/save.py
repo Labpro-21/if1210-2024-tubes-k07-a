@@ -9,7 +9,7 @@ import os
 import time # untuk time.sleep
 # setiap function akan return array yang sudah dimodifikasi (karena hasil permainan)
 
-def save():
+def save(array_user: list, array_monster: list, array_monster_inventory: list, array_item_inventory: list, array_monster_shop: list, array_item_shop: list):
     folder = input("Masukkan nama folder: ")
     print()
     print("Saving...")
@@ -45,5 +45,3 @@ def write_csv(path: str, data: list):
     with open(path, "w") as file: 
         for row in data:
             file.write(';'.join(map(str, row)) + '\n')
-
-save()
