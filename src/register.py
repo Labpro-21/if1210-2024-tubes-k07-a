@@ -5,6 +5,12 @@
 # KAMUS
 
 # ALGORITMA
+def is_integer(user_input: str):
+    for char in str(user_input):
+        if (ord(char) < ord('0')) or (ord(char) > ord('9')):
+            return False
+    return True
+
 def register(logged_in: bool, array_user: list, array_monster: list, array_monster_inventory: list ):
     username = input("Masukkan username: ")
     password = input("Masukkan password: ")
@@ -13,7 +19,7 @@ def register(logged_in: bool, array_user: list, array_monster: list, array_monst
         print("Register gagal")
         print(f"Anda masih login dengan username {username}. Silahkan logout terlebih dahulu sebelum melakukan register.")
     else:
-        cekValid(username, password, array_user, array_monster, array_monster_inventory)
+        return cekValid(username, password, array_user, array_monster, array_monster_inventory)
             
 def cekValid(username: str, password:str, array_user: list, array_monster: list, array_monster_inventory: list):
     # syarat username yang hanya boleh berisi alfabet, angka, undescore, dan strip
@@ -73,17 +79,30 @@ def cekValid(username: str, password:str, array_user: list, array_monster: list,
             if i >= batas_akhir:
                 batas_akhir = i 
     print()
-    monster_pilihan = int(input("Monster pilihanmu: "))
+    monster_pilihan = input("Monster pilihanmu: ")
+    while True:
+        if(is_integer(monster_pilihan)):
+            monster_pilihan = int(monster_pilihan)
+            break
+        print("input tidak valid. Coba pilih ulang.")
+        monster_pilihan = input("Monster pilihanmu: ")
+
     while monster_pilihan < batas_awal or monster_pilihan > batas_akhir:
         print("input tidak valid. Coba pilih ulang.")
-        monster_pilihan = int(input("Monster pilihanmu: "))
+        monster_pilihan = input("Monster pilihanmu: ")
+        while True:
+            if(is_integer(monster_pilihan)):
+                monster_pilihan = int(monster_pilihan)
+                break
+            monster_pilihan = input("Monster pilihanmu: ")
+
     nama_monster_pilihan = array_monster[monster_pilihan][1]
     print()
     print(f"Selamat datang Agent {username}. Mari kita mengalahkan Dr. Asep Spakbor dengan {nama_monster_pilihan}!")
     # menyimpan monster pilihan ke array csv monster_inventory
     data_monster_inventory = [data_user[0], str(monster_pilihan), '1']
     array_monster_inventory.append(data_monster_inventory)
-    return array_monster_inventory
+    return array_user,array_monster_inventory
     
 
 def cekPassword(password: str) -> str:

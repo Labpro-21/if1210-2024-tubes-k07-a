@@ -57,7 +57,7 @@ if check_folder == True:
             if perintah == "HELP" or perintah == "MENU":
                 help(logged_in,role,username)
             elif perintah == "REGISTER":   
-                array_monster_inventory = register(logged_in,array_user, array_monster, array_monster_inventory)
+                array_user, array_monster_inventory = register(logged_in,array_user, array_monster, array_monster_inventory)
             elif perintah == "LOGIN":
                 logged_in, user_id = login(logged_in,user_id,array_user)
             elif perintah == "SAVE":
