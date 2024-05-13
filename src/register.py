@@ -94,6 +94,7 @@ def cekValid(username: str, password:str, array_user: list, array_monster: list,
             if(is_integer(monster_pilihan)):
                 monster_pilihan = int(monster_pilihan)
                 break
+            print("input tidak valid. Coba pilih ulang.")
             monster_pilihan = input("Monster pilihanmu: ")
 
     nama_monster_pilihan = array_monster[monster_pilihan][1]

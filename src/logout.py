@@ -4,19 +4,16 @@
 # Note: logout dilakukan saat login sudah dilaksanakan
 
 # Algoritma
-from monster import csv_to_array
-
-def check_login():
-    return False
-
-def logout():
-    if check_login():
+def logout(logged_in: bool) -> bool:
+    if logged_in:
         log_out = input("Apakah anda ingin keluar dari permainan? (iya / tidak): ")
         if log_out() == "iya":
             print("User berhasil melakukan logout.")
+            return False # sudah tidak login
         else:
             print("Logout dibatalkan.")
+            return True # masih login
     else:
-        print("User belum login.")
+        print("User belum login.") 
+        return False # memang belum login
 
-logout()

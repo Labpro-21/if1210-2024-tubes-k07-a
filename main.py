@@ -11,6 +11,7 @@ from src.load import csv_to_array
 from src.menu_help import *
 from src.register import *
 from src.login import *
+from src.logout import *
 from src.save import *
 from src.exit import *
 # from src.shop_management import *
@@ -60,6 +61,8 @@ if check_folder == True:
                 array_user, array_monster_inventory = register(logged_in,array_user, array_monster, array_monster_inventory)
             elif perintah == "LOGIN":
                 logged_in, user_id = login(logged_in,user_id,array_user)
+            elif perintah == "LOGOUT":
+                logged_in = logout(logged_in)
             elif perintah == "SAVE":
                 save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
             elif perintah == "EXIT":
@@ -80,6 +83,8 @@ if check_folder == True:
                     register(logged_in,array_user, array_monster, array_monster_inventory)
                 elif perintah == "LOGIN":
                     logged_in, user_id = login(logged_in,user_id,array_user)
+                elif perintah == "LOGOUT":
+                    logged_in = logout(logged_in)
                 elif perintah == "SHOP MANAGEMENT": 
                     pass
                 elif perintah == "MONSTER MANAGEMENT":
@@ -99,7 +104,7 @@ if check_folder == True:
                 elif perintah == "LOGIN":
                     logged_in, user_id = login(logged_in,user_id,array_user)
                 elif perintah == "LOGOUT":
-                    pass
+                    logged_in = logout(logged_in)
                 elif perintah == "HELP" or perintah == "MENU":
                     help(logged_in,role,username)
                 elif perintah == "INVENTORY":

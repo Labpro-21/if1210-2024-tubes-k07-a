@@ -21,10 +21,22 @@ def monster_management(array_monster: list):
     print('Selamat datang di database monster!')
     print('1. Tampilkan semua monster')
     print('2. Tambahkan monster baru')
-    action = int(input('Pilih aksi yang ingin dilakukan: '))
+    action = input('Pilih aksi yang ingin dilakukan: ')
+    while True:
+        if(is_integer(action)):
+            action = int(action) # ubah ke int
+            break
+        print('Aksi yang dipilih tidak ditemukan.')
+        action = input('Pilih aksi yang ingin dilakukan: ')
     while (action != 1) and (action != 2):
         print('Aksi yang dipilih tidak ditemukan.')
-        action = int(input('Pilih aksi yang ingin dilakukan: '))
+        action = input('Pilih aksi yang ingin dilakukan: ')
+        while True:
+            if(is_integer(action)):
+                action = int(action) # ubah ke int
+                break
+            print('Aksi yang dipilih tidak ditemukan.')
+            action = input('Pilih aksi yang ingin dilakukan: ')
     if (action == 1):
         printing_array = [['a','b','c','d','e'] for i in range (len(array_monster))]
         for i in range(len(printing_array)):
