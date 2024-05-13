@@ -20,7 +20,7 @@ from src.inventory import *
 # from src.battle import *
 # from src.arena import *
 # from src.shopcurrency import *
-# from src.laboratory import *
+from src.laboratory import *
 
 parser = argparse.ArgumentParser(description="load data dari folder yang dipilih")
 parser.add_argument("folder", help="nama folder yang berisi data yang ingin di load")
@@ -116,7 +116,7 @@ if check_folder == True:
                 elif perintah == "SHOP":
                     pass
                 elif perintah == "LABORATORY":
-                    pass
+                    array_monster_inventory, array_user = laboratory(array_user, array_monster_inventory, array_monster, user_id)
                 elif perintah == "SAVE":
                     save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 elif perintah == "EXIT":
