@@ -5,7 +5,7 @@
 # KAMUS
 
 # ALGORITMA
-def register(logged_in: str):
+def register(logged_in: str, array_user: list, array_monster: list, array_monster_inventory: list):
     username = input("Masukkan username: ")
     password = input("Masukkan password: ")
     # syarat dimana user tidak boleh dalam keadaan sedang login
@@ -13,9 +13,9 @@ def register(logged_in: str):
         print("Register gagal")
         print(f"Anda masih login dengan username {username}. Silahkan logout terlebih dahulu sebelum melakukan register.")
     else:
-        cekValid(username, password)
+        cekValid(username, password, array_user, array_monster, array_monster_inventory)
             
-def cekValid(username: str, password:str):
+def cekValid(username: str, password:str, array_user: list, array_monster: list, array_monster_inventory: list):
     # syarat username yang hanya boleh berisi alfabet, angka, undescore, dan strip
     while True:
         # convert to ASCII
@@ -107,5 +107,3 @@ def cekPassword(password: str) -> str:
             print("Password tidak boleh kosong. Masukkan kembali password baru")
             password = input("Masukkan password: ")
     return password
-
-register()
