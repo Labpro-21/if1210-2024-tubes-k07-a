@@ -1,161 +1,160 @@
 # Program: Shop management
 # Writer: Felicia Kannitha Ruth
-# Hari, tanggal: 11 Mei 2024
-# Note: -
+# Hari, tanggal: 14 Mei 2024
+# Note: 
 
-# ALGORITMA
-# import
-from monster import csv_to_array
+monsters = [
+    { 'id': 1, 'type': "Pikachow", 'atk_power': 125, 'def_power': 10, 'hp': 600, 'stok': 10, 'harga': 500 },
+    { 'id': 2, 'type': "Bulbu", 'atk_power': 50, 'def_power': 50, 'hp': 1200, 'stok': 4, 'harga': 700 },
+    { 'id': 3, 'type': "Zeze", 'atk_power': 300, 'def_power': 10, 'hp': 100, 'stok': 3, 'harga': 1000 },
+    { 'id': 4, 'type': "Zuko", 'atk_power': 100, 'def_power': 25, 'hp': 800, 'stok': 8, 'harga': 550 },
+    { 'id': 5, 'type': "Chacha", 'atk_power': 80, 'def_power': 30, 'hp': 700, 'stok': 8, 'harga': 550 },
+    { 'id': 6, 'type': "Sukuna", 'atk_power': 650, 'def_power': 30, 'hp': 1000, 'stok': 0, 'harga': 0 }
+]
 
-# manual append
+
+potions = [
+    { 'id': 1, 'type': "strength", 'stok': 5, 'harga': 10 },
+    { 'id': 2, 'type': "resilience", 'stok': 3, 'harga': 5 },
+    { 'id': 3, 'type': "resilience", 'stok': 7, 'harga': 3 },
+    { 'id': 4, 'type': "healing", 'stok': 3, 'harga': 0 },
+    { 'id': 5, 'type': "strength", 'stok': 20, 'harga': 0 } 
+]            
+
 def create_shop(name):
     return {'name': name, 'items': []}
 
-def manual_append(shop, item):
-    shop['items'].append(item)
+# PILIHAN PERTAMA UNTUK MELIHAT MONSTER
+def show_monster_list(monster_list):
+    # Print the header
+    print(f"{'ID':<5} {'Type':<10} {'Attack':<8} {'Defense':<8} {'HP':<5} {'Stok':<5} {'Harga':<5}")
+    print("="*60)
+    
+    # Print each monster's details
+    for monster in monster_list:
+        print(f"{monster['id']:<5} {monster['type']:<10} {monster['atk_power']:<8} {monster['def_power']:<8} {monster['hp']:<5} {monster['stok']:<5} {monster['harga']:<5}")
 
-# baca file
-def baca_csv(nama_file):
-    return csv_to_array(nama_file)
-
-print("<<<SHOP MANAGEMENT>>>")
-print("Selamat datang di TOKO!!")
-
-baca_csv("item_inventory.csv")
-baca_csv("item_shop.csv")
-baca_csv("monster_shop.csv")
-baca_csv("monster.csv")
-
-item_Shop = baca_csv("item_shop.csv")
-mons = baca_csv("monster.csv")
-item_inv = baca_csv("item_inventory.csv")
-mons_shop = baca_csv("monster_shop.csv")
-
-x = 0
-
-def tampilkan_border(data):
-    # Mencari len terpanjang kolom id, type, atk_power, dan def_power agar tampilan rapi
-    longest = []
-
-    # Mengecek panjang elemtn setiap baris terlebih dahulu dari setiap kolom
-    for i in range(len(data[0])):
-        maks = 0
-        for j in range(len(data)):
-            if len(str(data[j][i])) > maks:
-                maks = len(str(data[j][i]))
-        longest.manual_append(maks)
-
-    # Melakukan print setiap baris dengan dekorasi border
-    for i in range(len(data)):
-        for j in range(len(data[0])):
-            if j != (len(data[0]) - 1):
-                # Print data
-                print(data[i][j], end="")
-                # Print spasi
-                print((longest[j] - len(str(data[i][j]))) * " ", end="")
-                # Print border
-                print(" | ", end="")
-            else: # kolom terakhir tidak menggunakan border
-                print(data[i][j])
-
-def show_id_mons():
-    print("ID | Type          | ATK Power | DEF Power | HP   | Stok | Harga")
-    for i in range(len(mons)):
-        id = mons[i][0]
-        type = mons[i][1]
-        atk = mons[i][2]
-        defence = mons[i][3]
-        hp = mons[i][4]
-        stok = mons_shop[i][1]
-        price = mons_shop[i][2]
-        print(f"{id}  | {type}          | {atk}        | {defence}      | {hp}   | {stok}    | {price}")
+def show_potion_list(potion_list):
+    # Print the header
+    print(f"{'ID':<5} {'Type':<12} {'Stok':<5} {'Harga':<5}")
+    print("="*30)
+    
+    # Print each potion's details
+    for potion in potion_list:
+        harga = potion['harga'] if potion['harga'] is not None else 0
+        print(f"{potion['id']:<5} {potion['type']:<12} {potion['stok']:<5} {harga:<5}")
         
-def show_id_pot():
-    print("ID | Type          | Stok | Harga")
-    for j in range (1, len(item_Shop)):
-        id_1 = j
-        type_1 = item_Shop[j][0]
-        stok_1 = item_Shop[j][1]
-        harga_1 = item_Shop[j][2]
-        print(f"{id_1} |{type_1} potion         |{stok_1}   |{harga_1}")
-
-# function untuk menambah, update, menghapus
+# Fungsi untuk menambahkan monster baru
 def add_monster(shop):
     id_ = int(input("Masukkan ID monster: "))
-    stock = int(input("Masukkan stok monster: "))
-    price = int(input("Masukkan harga monster: "))
-    monster = {'id': id_, 'type': 'monster', 'atk_power': 0, 'def_power': 0, 'hp': 0, 'stock': stock, 'price': price}
-    manual_append(shop, monster)
-    print(f"Monster baru berhasil ditambahkan ke toko {shop}!")
+    
+    # Validasi ID
+    for monster in shop:
+        if monster['id'] == id_:
+            print("ID yang dimasukkan sudah ada, mohon masukkan ID yang lain.")
+            return
+    
+    type_ = input("Masukkan tipe monster: ")
+    atk_power = int(input("Masukkan kekuatan serangan monster: "))
+    def_power = int(input("Masukkan kekuatan pertahanan monster: "))
+    hp = int(input("Masukkan HP monster: "))
+    stok = int(input("Masukkan stok monster: "))
+    harga = int(input("Masukkan harga monster: "))
 
+    monster = {
+        'id': id_,
+        'type': type_,
+        'atk_power': atk_power,
+        'def_power': def_power,
+        'hp': hp,
+        'stok': stok,
+        'harga': harga
+    }
+
+    shop.append(monster)
+    print("Monster baru berhasil ditambahkan ke toko!")
+
+# Fungsi untuk menambahkan potion baru
 def add_potion(shop):
     id_ = int(input("Masukkan ID potion: "))
-    stock = int(input("Masukkan stok potion: "))
-    price = int(input("Masukkan harga potion: "))
-    potion = {'id': id_, 'type': 'potion', 'stock': stock, 'price': price}
-    manual_append(shop, potion)
-    print(f"Potion baru berhasil ditambahkan ke toko {shop}!")
+    
+    # Validasi ID
+    for potion in shop:
+        if potion['id'] == id_:
+            print("ID yang dimasukkan sudah ada, mohon masukkan ID yang lain.")
+            return
+    
+    type_ = input("Masukkan tipe potion: ")
+    stok = int(input("Masukkan stok potion: "))
+    harga = int(input("Masukkan harga potion: "))
 
+    potion = {
+        'id': id_,
+        'type': type_,
+        'stok': stok,
+        'harga': harga
+    }
+
+    shop.append(potion)
+    print("Potion baru berhasil ditambahkan ke toko!")
+
+# Fungsi untuk memperbarui informasi monster
 def update_monster(shop):
-    id_ = input("Masukkan ID monster: ")
-    file_csv = show_id_mons()
-    data = baca_csv(file_csv)
-    print("Data:", data)
-    for item in data:
-        if item['type'] == 'monster' and str(item['id']) == id_:
-            stock = input("Masukkan stok baru dari monster (tekan enter apabila tidak ingin diubah): ")
-            if stock:
-                item['stock'] = int(stock)
-            price = input("Masukkan harga baru dari monster (tekan enter apabila tidak ingin diubah): ")
-            if price:
-                item['price'] = int(price)
-            print(f"Monster dengan ID {id_} di toko {shop['name']} berhasil diperbaharui!")
+    id_ = int(input("Masukkan ID monster: "))
+    for item in shop:
+        if item['id'] == id_:
+            stok = input("Masukkan stok baru dari monster (tekan enter apabila tidak ingin diubah): ")
+            if stok:
+                item['stok'] = int(stok)
+            harga = input("Masukkan harga baru dari monster (tekan enter apabila tidak ingin diubah): ")
+            if harga:
+                item['harga'] = int(harga)
+            print(f"Monster dengan ID {id_} berhasil diperbaharui!")
             return
     print("Monster tidak ditemukan, cek ID monster!")
 
+# Fungsi untuk memperbarui informasi potion
 def update_potion(shop):
-    id_ = input("Masukkan ID potion: ")
-    file_csv = show_id_pot()
-    data = baca_csv(file_csv)
-    print("Data:", data)
-    for item in data:
-        if item['type'] == 'potion' and str(item['id']) == id_:
-            stock = input("Masukkan stok baru dari potion (tekan enter apabila tidak ingin diubah): ")
-            if stock:
-                item['stock'] = int(stock)
-            price = input("Masukkan harga baru dari potion (tekan enter apabila tidak ingin diubah): ")
-            if price:
-                item['price'] = int(price)
-            print(f"Potion dengan ID {id_} di toko {shop['name']} berhasil diperbaharui!")
+    id_ = int(input("Masukkan ID potion: "))
+    for item in shop:
+        if item['id'] == id_:
+            stok = input("Masukkan stok baru dari potion (tekan enter apabila tidak ingin diubah): ")
+            if stok:
+                item['stok'] = int(stok)
+            harga = input("Masukkan harga baru dari potion (tekan enter apabila tidak ingin diubah): ")
+            if harga:
+                item['harga'] = int(harga)
+            print(f"Potion dengan ID {id_} berhasil diperbaharui!")
             return
     print("Potion tidak ditemukan, cek ID potion!")
 
-
+# Fungsi untuk menghapus monster
 def delete_monster(shop):
     id_ = int(input("Masukkan ID monster: "))
-    for i, monster in enumerate(shop['items']):
-        if monster['type'] == 'monster' and monster['id'] == id_:
+    for i, monster in enumerate(shop):
+        if monster['id'] == id_:
             re_ask = input("Apakah anda yakin ingin menghapus monster ini? (iya/tidak): ")
             if re_ask.lower() == 'iya':
-                del shop['items'][i]
-                print(f"Monster berhasil dihapus dari toko {shop}!")
+                del shop[i]
+                print(f"Monster berhasil dihapus!")
                 return
             else:
-                print(f"Penghapusan monster dari toko {shop} tidak jadi dilaksanakan.")
+                print("Penghapusan monster tidak jadi dilaksanakan.")
                 return
     print("Monster tidak ditemukan, cek ID monster!")
 
+# Fungsi untuk menghapus potion
 def delete_potion(shop):
     id_ = int(input("Masukkan ID potion: "))
-    for i, potion in enumerate(shop['items']):
-        if potion['type'] == 'potion' and potion['id'] == id_:
+    for i, potion in enumerate(shop):
+        if potion['id'] == id_:
             re_ask = input("Apakah anda yakin ingin menghapus potion ini? (iya/tidak): ")
             if re_ask.lower() == 'iya':
-                del shop['items'][i]
-                print(f"Potion berhasil dihapus dari toko {shop}!")
+                del shop[i]
+                print(f"Potion berhasil dihapus!")
                 return
             else:
-                print(f"Penghapusan potion dari toko {shop} tidak jadi dilaksanakan.")
+                print("Penghapusan potion tidak jadi dilaksanakan.")
                 return
     print("Potion tidak ditemukan, cek ID potion!")
     
@@ -176,9 +175,9 @@ def shop_management(shop):
             print("2. Potion")
             view_choice = input("Masukkan pilihan angka anda: ")
             if view_choice == '1':
-                show_id_mons()
+                show_monster_list(monsters)
             elif view_choice == '2':
-                show_id_pot()
+                show_potion_list(potions)
             else:
                 print("Pilihan tidak valid, masukkan angka kembali!")
 
@@ -188,9 +187,9 @@ def shop_management(shop):
             print("2. Potion")
             add_choice = input("Masukkan pilihan angka anda: ")
             if add_choice == '1':
-                add_monster(shop)
+                add_monster(monsters)
             elif add_choice == '2':
-                add_potion(shop)
+                add_potion(potions)
 
         elif choice == '3':
             print("Komponen apa yang ingin anda perbaharui?")
@@ -198,9 +197,9 @@ def shop_management(shop):
             print("2. Potion")
             update_choice = input("Masukkan pilihan angka anda: ")
             if update_choice == '1':
-                update_monster(shop)
+                update_monster(monsters)
             elif update_choice == '2':
-                update_potion(shop)
+                update_potion(potions)
 
         elif choice == '4':
             print("Komponen apa yang ingin anda hapus?")
@@ -208,9 +207,9 @@ def shop_management(shop):
             print("2. Potion")
             delete_choice = input("Masukkan pilihan angka anda: ")
             if delete_choice == '1':
-                delete_monster(shop)
+                delete_monster(monsters)
             elif delete_choice == '2':
-                delete_potion(shop)
+                delete_potion(potions)
 
         elif choice == '5':
             print(f"Anda sudah keluar dari toko {shop}. Terima kasih!")
