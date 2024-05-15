@@ -7,7 +7,7 @@
 def logout(logged_in: bool) -> bool:
     if logged_in:
         log_out = input("Apakah anda ingin keluar dari permainan? (iya / tidak): ")
-        if log_out() == "iya":
+        if log_out == "iya":
             print("User berhasil melakukan logout.")
             return False # sudah tidak login
         else:
