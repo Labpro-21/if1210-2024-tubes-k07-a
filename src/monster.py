@@ -5,7 +5,7 @@
 # KAMUS
 
 #Algoritma
-from lcg import *
+from src.lcg import *
 # monsterfile = open("D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
 
 def csv_to_array (filepath: str) -> list: # Fungsi untuk mengubah csv menjadi array

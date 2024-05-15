@@ -17,7 +17,7 @@ from src.exit import *
 # from src.shop_management import *
 from src.monster_management import *
 from src.inventory import *
-# from src.battle import *
+from src.battle import *
 # from src.arena import *
 # from src.shopcurrency import *
 from src.laboratory import *
@@ -110,7 +110,9 @@ if check_folder == True:
                 elif perintah == "INVENTORY":
                     inventory(array_user[user_id], array_item_inventory, array_monster_inventory, array_monster)
                 elif perintah == "BATTLE":
-                    pass
+                    win = battle(array_monster, array_monster_inventory, array_item_inventory, user_id, 1)
+                    if(win):
+                        array_user[user_id] = dapet_duit(array_user[user_id])
                 elif perintah == "ARENA":
                     pass
                 elif perintah == "SHOP":
