@@ -1,8 +1,3 @@
-# Program: Shop and Currency
-# Writer: Felicia Kannitha Ruth
-# Hari, tanggal: 14 Mei 2024
-# Note: potionnya belum bisa ke print
-
 
 def csv_to_array (path):
     lines = []
@@ -23,42 +18,42 @@ def csv_to_array (path):
         array.append(row)
     return array
 
-def show_list(data):
-    # Mencari len terpanjang kolom id, type, atk_power, dan def_power agar tampilan rapi
-    # Urutan indeks akan sesuai urutan item
-    longest = []
-
-    # Mengecek panjang elemen
-    for i in range(len(data[0])-1):
-        maks = 0
-        for j in range(len(data)):
-            if len(data[j][i]) > maks:
-                maks = len(data[j][i])
-        longest.append(maks)
-
-    # Keluaran
-    for i in range(len(data)):
-        for j in range(len(data[0])):
-            if j != (len(data[0]) - 1):
-                # Print data
-                print(data[i][j], end="")
-                # Print spasi
-                print((longest[j] - len(data[i][j])) * " ", end="")
-                # Print border
-                print(" | ", end="")
-            else: # kolom terakhir tidak menggunakan border
-                print(data[i][j])
-
+def table(array):
+    max_lengths = [0] * len(array[0]) # inisialisasi panjang maksimum dengan angka 0
+    for line in array:
+        for i in range(len(line)):
+            item_length = len(str(line[i]))
+            if item_length > max_lengths[i]:
+                max_lengths[i] = item_length # mencari panjang maksimum untuk mengetahui berapa banyak whitespace yang perlu ditambahkan
+    for line in array:
+        for i in range(len(line)):
+            item = line[i]
+            num_spaces = max_lengths[i] - len(str(item))  # menambah whitespace sesuai panjang maksimum dikurangi panjang item
+            if i < len(line) - 1: # kalau bukan akhir dari tabel tambahkan "|"
+                print(item, end=" " * num_spaces + " | ")
+            else: # untuk akhir dari tabel tidak perlu ditambah "|"
+                print(item, end=" " * num_spaces + " ")
+        print()
+        
 def display():
     # validasi aksi yang akan dilakukan
     item_type = input("Anda ingin melihat Potion/Monster: ")
     if item_type.lower() == 'monster':
-        print(show_list(read_filemonster()))
+        table(read_filemonster())
     elif item_type.lower() == 'potion':
-        print(show_list(read_filepotion()))
+        table(read_filepotion())
     else:
         print("Masukkan anda tidak valid. Masukkan lagi!")
-        
+
+# membaca id yang ada di monster buat ngecek saat membeli monster
+def id_shop(csv_file):
+    id = []
+    data_id = csv_to_array(csv_file)
+    for i in range(1, len(data_id)):
+        id.append(data_id[i][0])
+    
+    return id
+      
 # fungsi untuk membaca file dari monster dan dari potion
 def read_filemonster():
     data_monsternew = []
@@ -78,22 +73,17 @@ def read_filemonster():
 
 def read_filepotion():
     data_potionshop = csv_to_array('data/item_shop.csv')
-    data_potion = csv_to_array('data/item_inventory.csv')
-    
-    data_potionnew = []
-    data_potionnew.append (["id", "type", "stok", "harga"])   
-    for i in range (1, len(data_potionshop)):
-        for j in range (1, len(data_potion)):
-            if data_potion [j][0] == data_potionshop[i][0]:
-                data_potionnew.append(
-                    [data_potion[j][0], data_potion[j][1],
-                    data_potion[j][2], data_potion[j][3],
-                    data_potion[j][4], data_potionshop[i][1],
-                    data_potionshop[i][2]
-                    ])
-    return data_potionnew
 
-def has_monsterinven():
+    data_potion = []
+    data_potion.append(["id", data_potionshop[0][0], data_potionshop[0][1], data_potionshop[0][2]])
+    
+    for i in range(1, len(data_potionshop)):
+        data_potion.append([str(i), data_potionshop[i][0], data_potionshop[i][1], data_potionshop[i][2]])
+        
+    return data_potion
+
+# apabila user sudah memiliki monster di dalam inventory, maka hasil akan true
+def has_monsterinven(id):
     data_inventory = csv_to_array('data/monster_inventory.csv')
     for m in data_inventory:
         if m[0] == id:
@@ -102,37 +92,44 @@ def has_monsterinven():
 
 # fungsi untuk membeli monster dan potion
 def buy_monster():
-    if has_monsterinven():
-        True
-        int(input("Anda sudah memiliki monster ini, masukkan ID lain!"))
-    else:
-        data_monstershop = csv_to_array("data/monster_shop.csv")
-        data_monster = csv_to_array("data/monster.csv")
-        data_owca = csv_to_array("data/user.csv")         
-
+    data_monstershop = csv_to_array("data/monster_shop.csv")
+    data_monster = csv_to_array("data/monster.csv")
+    data_owca = csv_to_array("data/user.csv")
+    
     item_id = int(input("Masukkan ID monster: "))
-    quantity = int(input("Masukkan kuantitas: "))
-                
-    for i in range (1, len(data_monstershop)):
-        id = data_monstershop [i][0]
-        type = data_monster [i][1]
-        atk_power = data_monster [i][2]
-        def_power = data_monster [i][3]
-        hp = data_monster [i][4]
-        stok = data_monstershop [i][1]
-        price = data_monstershop [i][2]
-        owca =  data_owca[user_id][4]
+    id_monster = id_shop("data/monster_shop.csv")
+
+    if has_monsterinven(str(item_id)):
+        print("Anda sudah memiliki monster ini, masukkan ID lain!")
+        return
+    # apabila user sudah memiliki monster tersebut, maka akan dilakukan return
+
+    quantity = int(input("Masukkan kuantitas: "))  
+
+    for i in range(1, len(data_monstershop)):
+        id = int(data_monstershop[i][0])  
+        type = data_monster[i][1]
+        atk_power = data_monster[i][2]
+        def_power = data_monster[i][3]
+        hp = data_monster[i][4]
+        stok = int(data_monstershop[i][1]) 
+        price = int(data_monstershop[i][2])  
+        owca = int(data_owca[user_id][4])  
     
         if item_id == id:
-            owca = int(owca)
+            owca = price * int(owca)
             price = int(price)
             if owca >= price:
-                print(f"kamu berhasil membeli {type}")
-                print(f"Sisa O.W.C.A kamu {owca-price}")
-                owca = owca - price
-                data_owca[user_id][4] = owca
-            elif owca < price:
+                if owca >= price:
+                    print(f"Kamu berhasil membeli {type}")
+                    print(f"Sisa O.W.C.A kamu {owca - price}")
+                    owca -= price
+                    csv_to_array[user_id][4] = owca
+                else:
+                    print("Stok monster tidak mencukupi.")
+            else:
                 print("O.W.C.A kamu kurang")
+            break
                 
 def buy_potion():
     data_potionshop = csv_to_array("data/item_inventory.csv")
@@ -141,6 +138,7 @@ def buy_potion():
     
     item_id = int(input("Masukkan ID potion: "))
     quantity = int(input("Masukkan kuantitas: "))
+    
     for j in range (1, len(read_filepotion)):
         id_1 = j
         type_1 = data_potion[j][0]
@@ -158,7 +156,7 @@ def buy_potion():
         elif owca < harga_1:
             print("O.W.C.A kamu kurang")
 
-# cek dulu user ke berapa untuk mengetahui currency nya 
+# cek dulu user ke berapa yang sedang membuka shop
 user_id = int(input("Masukkan user id anda: "))
 
 # contoh penggunaan dan tampilan akan seperti apa
