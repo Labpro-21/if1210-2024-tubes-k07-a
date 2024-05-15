@@ -30,5 +30,5 @@ def login(logged_in: bool, user_id: int, array_user: list):
             print('Lakukan registrasi terlebih dahulu sebelum melakukan login.')
     else:  # logged_in = True
         print('Login gagal!')
-        print('Kamu sudah login dengan akun', username + ', lakukan logout terlebih dahulu sebelum melakukan login kembali.')
+        print('Kamu sudah login dengan akun', array_user[user_id][1] + ', lakukan logout terlebih dahulu sebelum melakukan login kembali.')
     return logged_in, user_id
