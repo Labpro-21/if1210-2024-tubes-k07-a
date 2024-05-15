@@ -228,7 +228,8 @@ def battle(monsterarray: list, monster_inventory: list, item_inventory: list, us
                     break
                 else:
                     print("Perintah tidak valid, ulangi!")
-            print("Perintah tidak valid, ulangi!")
+            else:
+                print("Perintah tidak valid, ulangi!")
         if(kabur):
             break
 

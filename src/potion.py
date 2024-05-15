@@ -7,6 +7,11 @@
 # item_inventory : matriks
 # status_potion : dictionary (str:bool)
 # nama_monster : string
+def is_integer(user_input: str):
+    for char in str(user_input):
+        if (ord(char) < ord('0')) or (ord(char) > ord('9')):
+            return False
+    return True
 
 def pilih_potion(user_id: int, item_inventory: list) -> list:
     count = 1
@@ -45,18 +50,24 @@ def use_potion(user_id: int, item_inventory: list, status_potion: list, nama_mon
         pilihan_potion = pilih_potion(user_id,item_inventory)
         if(len(pilihan_potion)==0):
             return item_inventory, status_potion, 0 
-            
-        potion_dipilih = int(input("Pilih potion untuk diminum: "))
+        while True:
+            potion_dipilih = input("Pilih potion untuk diminum: ")
+            if(is_integer(potion_dipilih)):
+                potion_dipilih = int(potion_dipilih)
+                break
+            print("Pilihan nomor tidak tersedia!") # input tidak valid
+            # ulangi
+
         print()
         # user memilih cancel
         if(potion_dipilih==len(pilihan_potion)+1):
             print()
             return item_inventory, status_potion, 0 
-            #kembali ke state awal? how?
+            #kembali ke state awal? how? (solved)
 
         #pakai potion
         elif((potion_dipilih>0)and(potion_dipilih<=len(pilihan_potion))): # 0 < potion_dipilih < len(pilihan_potion)
-            index = pilihan_potion[potion_dipilih-1][3]
+            index = int(pilihan_potion[potion_dipilih-1][3])
             item_inventory[index][2] = int(item_inventory[index][2])
             if(item_inventory[index][2]==0):
                 print("Wah, kamu sedang tidak memiliki ramuan ini, silahkan pilih ramuan lain!")
