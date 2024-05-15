@@ -45,4 +45,3 @@ def write_csv(path: str, data: list):
     with open(path, "w") as file: 
         for row in data:
             file.write(';'.join(map(str, row)) + '\n')
-

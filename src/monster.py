@@ -299,6 +299,21 @@ def gambar_monster(id: str):
                                       #@*@@%%%%%@@%%%%%%@@==-@+++:                                  
                                       :..:=---===*+=--::.....-....                                                               
 """)
+    else:
+        print(r"""
+           _/\----/\   
+          /         \     /\
+         |  O    O   |   |  |
+         |  .vvvvv.  |   |  |
+         /  |     |   \  |  |
+        /   `^^^^^'    \ |  |
+      ./  /|            \|  |_
+     /   / |         |\__     /
+     \  /  |         |   |__|
+      `'   |  _      |
+        _.-'-' `-'-'.'_
+   __.-'               '-.__
+""")
 # monsterarray = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
 # print(monsterarray)
 # print(level_buff(5, 2, monsterarray))

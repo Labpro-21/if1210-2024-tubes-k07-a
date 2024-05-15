@@ -1,82 +1,66 @@
 # Program: Shop and Currency
 # Writer: Felicia Kannitha Ruth
-# Hari, tanggal: 11 Mei 2024
+# Hari, tanggal: 14 Mei 2024
 # Note: -
 
-from monster import csv_to_array
+# array
+monsters = [
+    { 'id': 1, 'type': "Pikachow", 'atk_power': 125, 'def_power': 10, 'hp': 600, 'stok': 10, 'harga': 500 },
+    { 'id': 2, 'type': "Bulbu", 'atk_power': 50, 'def_power': 50, 'hp': 1200, 'stok': 4, 'harga': 700 },
+    { 'id': 3, 'type': "Zeze", 'atk_power': 300, 'def_power': 10, 'hp': 100, 'stok': 3, 'harga': 1000 },
+    { 'id': 4, 'type': "Zuko", 'atk_power': 100, 'def_power': 25, 'hp': 800, 'stok': 8, 'harga': 550 },
+    { 'id': 5, 'type': "Chacha", 'atk_power': 80, 'def_power': 30, 'hp': 700, 'stok': 8, 'harga': 550 },
+    { 'id': 6, 'type': "Sukuna", 'atk_power': 650, 'def_power': 30, 'hp': 1000, 'stok': 0, 'harga': 0 }
+]
 
+item_inventory = [
+    { 'id': 2, 'type': "Bulbu" },
+    { 'id': 1, 'type': "Pikachow" }, 
+    { 'id': 0, 'type': "empty" }, 
+]
+
+potions = [
+    { 'id': 1, 'type': "strength", 'stok': 5, 'harga': 10 },
+    { 'id': 2, 'type': "resilience", 'stok': 3, 'harga': 5 },
+    { 'id': 3, 'type': "resilience", 'stok': 7, 'harga': 3 },
+    { 'id': 4, 'type': "healing", 'stok': 3, 'harga': 0 },
+    { 'id': 5, 'type': "strength", 'stok': 20, 'harga': 0 } 
+]            
+
+currency = 1500
 # ALGORITMA
-# baca file monster dan potion
-def baca_csv(nama_file):
-    return csv_to_array(nama_file)
-
 print("<<<SHOP>>>")
 print("Selamat datang di TOKO!!")
 
-item_Shop = baca_csv("item_shop.csv")
-mons = baca_csv("monster.csv")
-item_inv = baca_csv("item_inventory.csv")
-mons_shop = baca_csv("monster_shop.csv")
+def show_monster_list(monster_list):
+    # Print the header
+    print(f"{'ID':<5} {'Type':<10} {'Attack':<8} {'Defense':<8} {'HP':<5} {'Stok':<5} {'Harga':<5}")
+    print("="*60)
+    
+    # Print each monster's details
+    for monster in monster_list:
+        print(f"{monster['id']:<5} {monster['type']:<10} {monster['atk_power']:<8} {monster['def_power']:<8} {monster['hp']:<5} {monster['stok']:<5} {monster['harga']:<5}")
 
-x = 0
+def show_potion_list(potion_list):
+    # Print the header
+    print(f"{'ID':<5} {'Type':<12} {'Stok':<5} {'Harga':<5}")
+    print("="*30)
+    
+    # Print each potion's details
+    for potion in potion_list:
+        harga = potion['harga'] if potion['harga'] is not None else 0
+        print(f"{potion['id']:<5} {potion['type']:<12} {potion['stok']:<5} {harga:<5}")
 
-def tampilkan_border(data):
-    # Mencari len terpanjang kolom id, type, atk_power, dan def_power agar tampilan rapi
-    longest = []
-
-    # Mengecek panjang elemtn setiap baris terlebih dahulu dari setiap kolom
-    for i in range(len(data[0])):
-        maks = 0
-        for j in range(len(data)):
-            if len(str(data[j][i])) > maks:
-                maks = len(str(data[j][i]))
-        longest.append(maks)
-
-    # Melakukan print setiap baris dengan dekorasi border
-    for i in range(len(data)):
-        for j in range(len(data[0])):
-            if j != (len(data[0]) - 1):
-                # Print data
-                print(data[i][j], end="")
-                # Print spasi
-                print((longest[j] - len(str(data[i][j]))) * " ", end="")
-                # Print border
-                print(" | ", end="")
-            else: # kolom terakhir tidak menggunakan border
-                print(data[i][j])
-
-# menampilkan monster dan potion
-def show_id_mons():
-    print("ID | Type          | ATK Power | DEF Power | HP   | Stok | Harga")
-    for i in range(len(mons)):
-        id = mons[i][0]
-        type = mons[i][1]
-        atk = mons[i][2]
-        defence = mons[i][3]
-        hp = mons[i][4]
-        stok = mons_shop[i][1]
-        price = mons_shop[i][2]
-        print(f"{id}  | {type}          | {atk}        | {defence}      | {hp}   | {stok}    | {price}")
-        
-def show_id_pot():
-    print("ID | Type          | Stok | Harga")
-    for j in range (1, len(item_Shop)):
-        id_1 = j
-        type_1 = item_Shop[j][0]
-        stok_1 = item_Shop[j][1]
-        harga_1 = item_Shop[j][2]
-        print(f"{id_1} |{type_1} potion         |{stok_1}   |{harga_1}")
-
-# fungsi untuk membeli potion
-def buy_potion(item_id, quantity, currency):
-    item = next((p for p in item_inv if p['id'] == str(item_id)), None)
+# Fungsi untuk membeli potion
+def buy_potion(item_id, quantity, currency, potions_shop):
+    item = next((p for p in potions_shop if p['id'] == str(item_id)), None)
 
     if item:
-        if item['stock'] >= quantity:
-            total_price = item['price'] * quantity
+        if item['stok'] >= quantity:
+            total_price = item['harga'] * quantity
             if currency >= total_price:
                 currency -= total_price
-                item['stock'] -= quantity
+                item['stok'] -= quantity
                 print(f"Anda berhasil membeli {quantity} {item['type']} dengan harga {total_price}. Sisa currency anda: {currency}")
             else:
                 print("Currency anda tidak cukup.")
@@ -87,24 +71,24 @@ def buy_potion(item_id, quantity, currency):
 
     return currency
 
-# fungsi untuk mengecek apabila monster sudah dimiliki di inventory
-def has_monster_in_inventory(monster_type):
+# Fungsi untuk memeriksa apakah monster sudah ada di inventory
+def has_monster_in_inventory(monster_type, item_inv):
     for m in item_inv:
         if m['type'] == monster_type and m['id'] != 0:
             return True
     return False
 
-# fungsi untuk membeli monster
-def buy_monster(item_id, quantity, currency):
-    item = next((m for m in mons_shop if m['id'] == str(item_id)), None)
+# Fungsi untuk membeli monster
+def buy_monster(item_id, quantity, currency, item_inv, monster_shop):
+    item = next((m for m in monster_shop if m['id'] == str(item_id)), None)
 
     if item:
         if item['stock'] >= quantity:
-            if has_monster_in_inventory(item['type']):
+            if has_monster_in_inventory(item['type'], item_inv):
                 print(f"Anda sudah memiliki {item['type']} di inventory.")
                 return currency
 
-            total_price = item['price'] * quantity
+            total_price = item['harga'] * quantity
             if currency >= total_price:
                 currency -= total_price
                 item['stock'] -= quantity
@@ -118,7 +102,7 @@ def buy_monster(item_id, quantity, currency):
 
     return currency
 
-# fungsi main untuk melihat, membeli, dan keluar
+# Fungsi main untuk melihat, membeli, dan keluar
 def main():
     currency = 0
 
@@ -132,20 +116,28 @@ def main():
         if choice == '1':
             item_type = input("Anda ingin melihat Potion/Monster: ")
             if item_type.lower() == 'monster':
-                show_id_mons()
+                show_monster_list(monsters)
             elif item_type.lower() == 'potion':
-                show_id_pot()
+                show_potion_list(potions)
             else:
                 print("Invalid item type.")
         elif choice == '2':
-            item_type = input("Anda ingin melihat Potion/Monster: ")
-            item_id = int(input("Masukkan ID: "))
-            quantity = int(input("Masukkan kuantitas: "))
-            currency = buy_item(item_type, item_id, quantity, currency)
+            item_type = input("Anda ingin membeli Potion/Monster: ")
+    
+            if item_type.lower() == 'monster':
+                item_id = int(input("Masukkan ID monster: "))
+                quantity = int(input("Masukkan kuantitas: "))
+                currency = buy_monster(item_id, quantity, currency, item_inventory, monster_shop)
+            elif item_type.lower() == 'potion':
+                item_id = int(input("Masukkan ID potion: "))
+                quantity = int(input("Masukkan kuantitas: "))
+                currency = buy_potion(item_id, quantity, currency, potions_shop)
+            else:
+                print("Pilihan tidak valid. Silakan masukkan kembali!")
         elif choice == '3':
             print(f"Anda sudah keluar dari toko. Terima kasih sudah datang!")
             break
         else:
-            print("Pilihan tidak valid. Masukkan kembali angka!")
+            print("Pilihan tidak valid. Masukkan kembali!")
             
 main()
