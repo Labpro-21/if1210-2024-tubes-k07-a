@@ -1,3 +1,7 @@
+# Program: Shop Currency
+# Writer: Felicia Kannitha Ruth
+# Hari, tanggal: 14 Mei 2024
+# Note: 
 
 def csv_to_array (path):
     lines = []
