@@ -2,19 +2,36 @@
 # Writer: Bertha Soliany Frandi
 # Tanggal: 10 Mei 2024
 
+# Note : Belum ada pengecekan ketika user tidak memberikan nama folder (Masih "error: the following arguments are required: folder")
+
+import os
+import time
 import argparse
+from src.load import csv_to_array
+from src.menu_help import *
+from src.register import *
+from src.login import *
+from src.logout import *
+from src.save import *
+from src.exit import *
+# from src.shop_management import *
+from src.monster_management import *
+from src.inventory import *
+# from src.battle import *
+# from src.arena import *
+# from src.shopcurrency import *
+from src.laboratory import *
+
 parser = argparse.ArgumentParser(description="load data dari folder yang dipilih")
 parser.add_argument("folder", help="nama folder yang berisi data yang ingin di load")
 args = parser.parse_args()
-folder_path = "./data/"+args.folder
+folder_path = "./"+args.folder
 
 # mengecek apakah folder ada
-import os
 check_folder = os.path.exists(folder_path)
 if check_folder == True:
     print("Loading...")
     
-    from load import csv_to_array
     array_user = csv_to_array(folder_path+"/user.csv")
     array_monster = csv_to_array(folder_path+"/monster.csv")
     array_monster_inventory = csv_to_array(folder_path+"/monster_inventory.csv")
@@ -22,7 +39,6 @@ if check_folder == True:
     array_item_inventory = csv_to_array(folder_path+"/item_inventory.csv")
     array_item_shop = csv_to_array(folder_path+"/item_shop.csv")
 
-    import time
     time.sleep(2)
 
     print("Selamat datang di program OWCA!")
@@ -32,73 +48,85 @@ if check_folder == True:
     # inisialisasi
     logged_in = False
     username = ''
+    role = ''
+    user_id = 0
     # meminta perintah berikutnya
     print('Ketik "HELP" untuk melihat menu')
     perintah = input(">>> ")
     while True:
         if logged_in == False:
             if perintah == "HELP" or perintah == "MENU":
-                import menu_help
-            elif perintah == "REGISTER":
-                import register
+                help(logged_in,role,username)
+            elif perintah == "REGISTER":   
+                array_user, array_monster_inventory = register(logged_in,array_user, array_monster, array_monster_inventory)
             elif perintah == "LOGIN":
-                import login
+                logged_in, user_id = login(logged_in,user_id,array_user)
+            elif perintah == "LOGOUT":
+                logged_in = logout(logged_in)
             elif perintah == "SAVE":
-                import save
+                save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
             elif perintah == "EXIT":
-                import exit
+                keluar = exit()
+                if keluar == True:
+                    save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 break
             else:
                 print("perintah tidak valid!")
         elif logged_in == True:
             # mendapatkan role user yang sedang login
-            for i in range(5):
-                if username == array_user[i][1]:
-                    role = array_user[i][3]
+            username = array_user[user_id][1]
+            role = array_user[user_id][3]
             if role == "admin":
                 if perintah == "HELP" or perintah == "MENU":
-                    import menu_help
+                    help(logged_in,role,username)
                 elif perintah == "REGISTER":
-                    import register
+                    register(logged_in,array_user, array_monster, array_monster_inventory)
                 elif perintah == "LOGIN":
-                    import login
+                    logged_in, user_id = login(logged_in,user_id,array_user)
+                elif perintah == "LOGOUT":
+                    logged_in = logout(logged_in)
                 elif perintah == "SHOP MANAGEMENT": 
-                    import shop_management
+                    pass
                 elif perintah == "MONSTER MANAGEMENT":
-                    import monster_management
+                    array_monster = monster_management(array_monster)
                 elif perintah == "SAVE":
-                    import save
+                    save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 elif perintah == "EXIT":
-                    import exit
+                    keluar = exit()
+                    if keluar == True:
+                        save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                     break
                 else:
                     print("Perintah tidak valid!")
             elif role == "agent":
                 if perintah == "REGISTER":
-                    import register
+                    register(logged_in,array_user, array_monster, array_monster_inventory)
                 elif perintah == "LOGIN":
-                    import login
+                    logged_in, user_id = login(logged_in,user_id,array_user)
                 elif perintah == "LOGOUT":
-                    import logout
+                    logged_in = logout(logged_in)
                 elif perintah == "HELP" or perintah == "MENU":
-                    import menu_help
+                    help(logged_in,role,username)
                 elif perintah == "INVENTORY":
-                    import inventory
+                    inventory(array_user[user_id], array_item_inventory, array_monster_inventory, array_monster)
                 elif perintah == "BATTLE":
-                    import battle
+                    pass
                 elif perintah == "ARENA":
-                    import arena
+                    pass
                 elif perintah == "SHOP":
-                    import shop
+                    pass
                 elif perintah == "LABORATORY":
-                    import laboratory
+                    array_monster_inventory, array_user = laboratory(array_user, array_monster_inventory, array_monster, user_id)
                 elif perintah == "SAVE":
-                    import save
+                    save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                 elif perintah == "EXIT":
-                    import exit
+                    keluar = exit()
+                    if keluar == True:
+                        save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                     break
                 else:
                     print("Perintah tidak valid!")
+
         perintah = input(">>> ")
             
 

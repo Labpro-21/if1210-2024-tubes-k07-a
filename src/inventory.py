@@ -7,11 +7,7 @@
 # monster_inventory : array of array
 # monster : array of array
 
-user = [2,"Asep_Spakbor","asepwow123","agent",9999]
-item_inventory = [[2,"strength",5],[2,"resilience",3],[3,"resilience",7],[4,"healing",3],[5,"strength",20]]
-monster_inventory = [[2,1,1],[3,2,2],[3,3,1],[4,4,1],[5,5,5]]
-monster = [[1,"Pikachow",125,10,600],[2,"Bulbu",50,50,1200],[3,"Zeze",300,10,100],[4,"Zuko",100,25,800],[5,"Chacha",80,30,700]]
-def inventory(user, item_inventory, monster_inventory, monster):
+def inventory(user: list, item_inventory: list, monster_inventory: list, monster: list):
     user_inventory = []
     count = 1
     print(f"=========== INVENTORY LIST (User ID: {user[0]}) ===========")
@@ -53,4 +49,3 @@ Type      : {user_inventory[idx-1][1]}
 Quantity  : {user_inventory[idx-1][2]}
 """)
     
-# cara call : inventory(user, item_inventory, monster_inventory, monster)
