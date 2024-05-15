@@ -1,7 +1,7 @@
 # PROGRAM F15 - Save
 # Writer: Bertha Soliany Frandi
 # Tanggal: 9 Mei 2024
-# Note : line 47 masih pakai fungsi map
+
 # KAMUS
 
 # ALGORITMA
@@ -44,4 +44,9 @@ def save(array_user: list, array_monster: list, array_monster_inventory: list, a
 def write_csv(path: str, data: list):
     with open(path, "w") as file: 
         for row in data:
-            file.write(';'.join(map(str, row)) + '\n')
+            for i in range(4):
+                if row[i] == row[3]:
+                    file.write(row[i])
+                else:
+                    file.write(row[i] + ';')
+            file.write('\n')
