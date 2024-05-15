@@ -7,21 +7,28 @@
 # monster_inventory : array of array
 # monster : array of array
 
+def is_integer(user_input: str):
+    for char in str(user_input):
+        if (ord(char) < ord('0')) or (ord(char) > ord('9')):
+            return False
+    return True
+
+
 def inventory(user: list, item_inventory: list, monster_inventory: list, monster: list):
     user_inventory = []
     count = 1
     print(f"=========== INVENTORY LIST (User ID: {user[0]}) ===========")
     print(f"Jumlah O.W.C.A Coin-mu sekarang {user[4]}.")
     for i in range(len(monster_inventory)):
-        if(monster_inventory[i][0]==user[0]): #Jika user_id cocok
-            print(f"{count}. Monster \t(Name: {monster[monster_inventory[i][1]-1][1]}, Lvl. {monster_inventory[i][2]}, HP: {monster[monster_inventory[i][1]-1][4]})")
-            detail_item = monster[monster_inventory[i][1]-1].copy()
+        if(str(monster_inventory[i][0])==str(user[0])): #Jika user_id cocok
+            print(f"{count}. Monster \t(Name: {monster[int(monster_inventory[i][1])-1][1]}, Lvl. {monster_inventory[i][2]}, HP: {monster[int(monster_inventory[i][1])-1][4]})")
+            detail_item = monster[int(monster_inventory[i][1])-1].copy()
             detail_item[0] = "Monster"
             detail_item.append(monster_inventory[i][2])
             user_inventory.append(detail_item)
             count += 1
     for i in range(len(item_inventory)):
-        if(item_inventory[i][0]==user[0]): #Jika user_id cocok
+        if(str(item_inventory[i][0])==str(user[0])): #Jika user_id cocok
             if(item_inventory[i][1]=="strength"):
                 tipe = "ATK"
             elif(item_inventory[i][1]=="resilience"):
@@ -34,7 +41,13 @@ def inventory(user: list, item_inventory: list, monster_inventory: list, monster
             count += 1
     print()
     print("Ketikkan id untuk menampilkan detail item:")
-    idx = int(input())
+    while(True):
+        idx = input()
+        if(is_integer(idx)):
+            idx = int(idx)
+            if((idx>=1)and(idx<count)):
+                break
+        print("Ketikkan id untuk menampilkan detail item:")
     if(user_inventory[idx-1][0]=="Monster"):
         print(f"""Monster
 Name      : {user_inventory[idx-1][1]}
