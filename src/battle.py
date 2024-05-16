@@ -146,7 +146,7 @@ def dapet_duit(user: list)-> list:
     return user
 
 # Mulai program
-def battle(monsterarray: list, monster_inventory: list, item_inventory: list, user_id: int, bot_battle_monster_level: int)->bool:
+def battle(monsterarray: list, monster_inventory: list, item_inventory: list, user_id: int, bot_battle_monster_level: int, arena: bool)->bool:
     win = False # Boolean untuk hasil battle
     monster_muncul_id = generate_number(defaultlcg, [1,len(monsterarray)])
     munculmonster(monsterarray, monster_muncul_id)
@@ -182,11 +182,15 @@ def battle(monsterarray: list, monster_inventory: list, item_inventory: list, us
     base_HP_bot_monster = bot_battle_monster[4]
 
     # Proses battle
+    if(arena):
+        print(f"============= STAGE {bot_battle_monster_level} =============")
     gambar_monster(user_battle_monster[0])
     monster_dipilih_user(user_battle_monster_level, user_battle_monster)
     status_potion = {"strength":False,"resilience":False,"healing":False}
     turn_counter = 1
     kabur = False
+    total_damage_dealt = 0
+    total_damage_taken = 0
     while base_HP_user_monster > 0 and base_HP_bot_monster > 0:
         # Turn user
         output_user_turn(turn_counter, user_battle_monster[1])
@@ -199,6 +203,7 @@ def battle(monsterarray: list, monster_inventory: list, item_inventory: list, us
                     damage = attack_user(base_atk_user_monster) # Randomize damage +- 30%
                     damage_reduction = defense(base_def_bot_monster, damage) # Damage reduction akibat atribut defense
                     damage_after_reduction = damage - defense(base_def_bot_monster, damage) # Damage setelah dikurangi defense musuh
+                    total_damage_dealt += damage_after_reduction # khusus arena
                     base_HP_bot_monster = math.floor(base_HP_bot_monster - damage_after_reduction) # HP berkurang karena damage musuh
                     if base_HP_bot_monster <= 0:
                         base_HP_bot_monster = 0
@@ -241,6 +246,7 @@ def battle(monsterarray: list, monster_inventory: list, item_inventory: list, us
         damage = attack_bot(base_atk_bot_monster) # Randomize damage +- 30%
         damage_reduction = defense(base_def_user_monster, damage) # Damage reduction akibat atribut defense
         damage_after_reduction = damage - defense(base_def_user_monster, damage) # Damage setelah dikurangi defense musuh
+        total_damage_taken += damage_after_reduction #khusus arena
         base_HP_user_monster = math.floor(base_HP_user_monster - damage_after_reduction) # HP berkurang karena damage musuh
         if base_HP_user_monster <= 0:
             base_HP_user_monster = 0
@@ -255,7 +261,8 @@ def battle(monsterarray: list, monster_inventory: list, item_inventory: list, us
 
     elif base_HP_user_monster == 0: # Kasus kalah
         print(f"Yahhh, Anda dikalahkan monster {bot_battle_monster[1]}. Jangan menyerah, coba lagi !!!")
-    
+    if(arena):
+        return win, total_damage_dealt, total_damage_taken
     return win
 
 # print(battle(monsterarray, monster_inventory, item_inventory, user_id)) # Contoh battle

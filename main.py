@@ -18,13 +18,16 @@ from src.exit import *
 from src.monster_management import *
 from src.inventory import *
 from src.battle import *
-# from src.arena import *
+from src.arena import *
 # from src.shopcurrency import *
 from src.laboratory import *
 
 parser = argparse.ArgumentParser(description="load data dari folder yang dipilih")
 parser.add_argument("folder", help="nama folder yang berisi data yang ingin di load")
 args = parser.parse_args()
+if not args.folder:
+    print("Tidak ada nama folder yang diberikan")
+    print("Usage: python main.py <nama_folder>")
 folder_path = "./"+args.folder
 
 # mengecek apakah folder ada
@@ -110,11 +113,11 @@ if check_folder == True:
                 elif perintah == "INVENTORY":
                     inventory(array_user[user_id], array_item_inventory, array_monster_inventory, array_monster)
                 elif perintah == "BATTLE":
-                    win = battle(array_monster, array_monster_inventory, array_item_inventory, user_id, 1)
+                    win = battle(array_monster, array_monster_inventory, array_item_inventory, user_id, 1, False)
                     if(win):
                         array_user[user_id] = dapet_duit(array_user[user_id])
                 elif perintah == "ARENA":
-                    pass
+                    oc_received = arena(array_monster, array_monster_inventory, array_item_inventory, user_id, 1)
                 elif perintah == "SHOP":
                     pass
                 elif perintah == "LABORATORY":
