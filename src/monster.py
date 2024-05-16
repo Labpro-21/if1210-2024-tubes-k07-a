@@ -57,9 +57,9 @@ def defense(defpower: float, enemydamage: float) -> float: # Fungsi untuk menghi
 
 def level_buff(level: int, user_battle_monster: list) -> list: # Buff atribut sesuai level. Digunakan pada saat battle, otomatis mengubah atribut attack, defense, HP menjadi integer
     if level > 1: # Jika level lebih dari 1, atribut dibuff sesuai level, dan diubah menjadi integer
-        user_battle_monster[2] = int(user_battle_monster[2]) + (int(user_battle_monster[2])*((level*10)/100)) # Buff attack
-        user_battle_monster[3] = int(user_battle_monster[3]) + (int(user_battle_monster[3])*((level*10)/100)) # Buff defense
-        user_battle_monster[4] = int(user_battle_monster[4]) + (int(user_battle_monster[4])*((level*10)/100)) # Buff HP
+        user_battle_monster[2] = int(user_battle_monster[2]) + int((int(user_battle_monster[2])*(((level-1)*10)/100))) # Buff attack
+        user_battle_monster[3] = int(user_battle_monster[3]) + int((int(user_battle_monster[3])*(((level-1)*10)/100))) # Buff defense
+        user_battle_monster[4] = int(user_battle_monster[4]) + int((int(user_battle_monster[4])*(((level-1)*10)/100))) # Buff HP
     else: # Jika level 1, atribut tidak dibuff, hanya diubah menjadi integer saja
         user_battle_monster[2] = int(user_battle_monster[2])
         user_battle_monster[3] = int(user_battle_monster[3])
