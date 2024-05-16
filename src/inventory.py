@@ -21,24 +21,25 @@ def inventory(user: list, item_inventory: list, monster_inventory: list, monster
     print(f"Jumlah O.W.C.A Coin-mu sekarang {user[4]}.")
     for i in range(len(monster_inventory)):
         if(str(monster_inventory[i][0])==str(user[0])): #Jika user_id cocok
-            print(f"{count}. Monster \t(Name: {monster[int(monster_inventory[i][1])-1][1]}, Lvl. {monster_inventory[i][2]}, HP: {monster[int(monster_inventory[i][1])-1][4]})")
-            detail_item = monster[int(monster_inventory[i][1])-1].copy()
+            print(f"{count}. Monster \t(Name: {monster[int(monster_inventory[i][1])][1]}, Lvl. {monster_inventory[i][2]}, HP: {monster[int(monster_inventory[i][1])][4]})")
+            detail_item = monster[int(monster_inventory[i][1])].copy()
             detail_item[0] = "Monster"
             detail_item.append(monster_inventory[i][2])
             user_inventory.append(detail_item)
             count += 1
     for i in range(len(item_inventory)):
         if(str(item_inventory[i][0])==str(user[0])): #Jika user_id cocok
-            if(item_inventory[i][1]=="strength"):
-                tipe = "ATK"
-            elif(item_inventory[i][1]=="resilience"):
-                tipe = "DEF"
-            else:
-                tipe = "Heal"
-            print(f"{count}. Potion \t(Type: {tipe}, Qty: {item_inventory[i][2]})")
-            detail_item = ["Potion",tipe,item_inventory[i][2]]
-            user_inventory.append(detail_item)
-            count += 1
+            if(int(item_inventory[i][2])!=0): #Jika potion ada
+                if(item_inventory[i][1]=="strength"):
+                    tipe = "ATK"
+                elif(item_inventory[i][1]=="resilience"):
+                    tipe = "DEF"
+                else:
+                    tipe = "Heal"
+                print(f"{count}. Potion \t(Type: {tipe}, Qty: {item_inventory[i][2]})")
+                detail_item = ["Potion",tipe,item_inventory[i][2]]
+                user_inventory.append(detail_item)
+                count += 1
     print()
     print("Ketikkan id untuk menampilkan detail item:")
     while(True):
@@ -51,9 +52,9 @@ def inventory(user: list, item_inventory: list, monster_inventory: list, monster
     if(user_inventory[idx-1][0]=="Monster"):
         print(f"""Monster
 Name      : {user_inventory[idx-1][1]}
-ATK Power : {user_inventory[idx-1][2]}
-DEF Power : {user_inventory[idx-1][3]}
-HP        : {user_inventory[idx-1][4]}
+ATK Power : {int(user_inventory[idx-1][2]) + int((int(user_inventory[idx-1][2])*(((int(user_inventory[idx-1][5])-1)*10)/100)))}
+DEF Power : {int(user_inventory[idx-1][3]) + int((int(user_inventory[idx-1][3])*(((int(user_inventory[idx-1][5])-1)*10)/100)))}
+HP        : {int(user_inventory[idx-1][4]) + int((int(user_inventory[idx-1][4])*(((int(user_inventory[idx-1][5])-1)*10)/100)))}
 Level     : {user_inventory[idx-1][5]}
 """)
     else: # user_inventory[idx-1][0]=="Potion"
