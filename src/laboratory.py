@@ -7,13 +7,13 @@
 # confirm: string
 
 # ALGORITMA
-def is_integer(user_input: str):
+def is_integer(user_input: str) -> bool:
     for char in str(user_input):
         if (ord(char) < ord('0')) or (ord(char) > ord('9')):
             return False
     return True
 
-def laboratory(array_user: list, array_monster_inventory: list, array_monster: list, user_id: int):
+def laboratory(array_user: list, array_monster_inventory: list, array_monster: list, user_id: int) -> (list, list):
     print('Kamu telah memasuki area lab monster!')
     print('---------- MONSTERS OWNED ----------')
     monster_amt = 0

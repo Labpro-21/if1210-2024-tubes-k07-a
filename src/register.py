@@ -22,7 +22,7 @@ def register(logged_in: bool, array_user: list, array_monster: list, array_monst
         return cekValid(username, password, array_user, array_monster, array_monster_inventory)
 
             
-def cekValid(username: str, password:str, array_user: list, array_monster: list, array_monster_inventory: list):
+def cekValid(username: str, password:str, array_user: list, array_monster: list, array_monster_inventory: list) -> (list, list):
     # syarat username yang hanya boleh berisi alfabet, angka, undescore, dan strip
     while True:
         # convert to ASCII

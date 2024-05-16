@@ -8,17 +8,17 @@
 # user_id: integer
 
 # ALGORITMA
-def login(logged_in: bool, user_id: int, array_user: list):
+def login(logged_in: bool, user_id: int, array_user: list) -> (bool, str):
     if not logged_in:
         username_found = False
-        username = input('Username: ')
-        password = input('Password: ')
+        username = input('>>> Username: ')
+        password = input('>>> Password: ')
         print()
         for i in range(1, len(array_user)):
             if array_user[i][1] == username and array_user[i][2] == password:
                 print('Login berhasil!')
-                print('Selamat datang Agent', username + '!')
-                print('Ketik "help" untuk melihat list command yang dapat kamu gunakan.')
+                print('Selamat datang', array_user[i][3], username + '!')
+                print('Ketik "HELP" untuk melihat list command yang dapat kamu gunakan.')
                 user_id = i
                 return True, user_id  # return login status dan user_id
             elif array_user[i][1] == username and array_user[i][2] != password:

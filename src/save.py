@@ -44,8 +44,8 @@ def save(array_user: list, array_monster: list, array_monster_inventory: list, a
 def write_csv(path: str, data: list):
     with open(path, "w") as file: 
         for row in data:
-            for i in range(5):
-                if row[i] == row[4]:
+            for i in range(len(row)):
+                if row[i] == row[len(row)-1]:
                     file.write(row[i])
                 else:
                     file.write(row[i] + ';')
