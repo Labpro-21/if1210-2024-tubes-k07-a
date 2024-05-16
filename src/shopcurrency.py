@@ -32,7 +32,7 @@ currency = 1500
 print("<<<SHOP>>>")
 print("Selamat datang di TOKO!!")
 
-def show_monster_list(monster_list):
+def show_monster_list(monster_list: list):
     # Print the header
     print(f"{'ID':<5} {'Type':<10} {'Attack':<8} {'Defense':<8} {'HP':<5} {'Stok':<5} {'Harga':<5}")
     print("="*60)
@@ -41,7 +41,7 @@ def show_monster_list(monster_list):
     for monster in monster_list:
         print(f"{monster['id']:<5} {monster['type']:<10} {monster['atk_power']:<8} {monster['def_power']:<8} {monster['hp']:<5} {monster['stok']:<5} {monster['harga']:<5}")
 
-def show_potion_list(potion_list):
+def show_potion_list(potion_list: list):
     # Print the header
     print(f"{'ID':<5} {'Type':<12} {'Stok':<5} {'Harga':<5}")
     print("="*30)
@@ -52,7 +52,7 @@ def show_potion_list(potion_list):
         print(f"{potion['id']:<5} {potion['type']:<12} {potion['stok']:<5} {harga:<5}")
 
 # Fungsi untuk membeli potion
-def buy_potion(item_id, quantity, currency, potions_shop):
+def buy_potion(item_id: int, quantity: int, currency: int, potions_shop: list) -> int:
     item = next((p for p in potions_shop if p['id'] == str(item_id)), None)
 
     if item:
@@ -72,14 +72,14 @@ def buy_potion(item_id, quantity, currency, potions_shop):
     return currency
 
 # Fungsi untuk memeriksa apakah monster sudah ada di inventory
-def has_monster_in_inventory(monster_type, item_inv):
+def has_monster_in_inventory(monster_type: str, item_inv: list) -> bool:
     for m in item_inv:
         if m['type'] == monster_type and m['id'] != 0:
             return True
     return False
 
 # Fungsi untuk membeli monster
-def buy_monster(item_id, quantity, currency, item_inv, monster_shop):
+def buy_monster(item_id: int, quantity: int, currency: int, item_inv: list, monster_shop: list) -> int:
     item = next((m for m in monster_shop if m['id'] == str(item_id)), None)
 
     if item:
