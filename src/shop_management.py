@@ -1,6 +1,6 @@
 # Program: Shop management
 # Writer: Felicia Kannitha Ruth
-# Hari, tanggal: 16 Mei 2024
+# Hari, tanggal: 14 Mei 2024
 # Note: 
 
 # fungsi untuk membaca file
@@ -43,7 +43,7 @@ def table(array):
 
 def id_shop(csv_file):
     # Akan digunakan untuk mengecek id yang akan digunakan
-    # saat akan membeli monster / potion
+    # saat akan membeli monster
     id = []
     data = csv_to_array(csv_file)
     for i in range(1, len(data)):
@@ -97,30 +97,35 @@ def add():
     while True:
         add_things = input("Mau menambahkan apa? (monster/potion): ").lower()
         if add_things == 'monster':
+            # data untuk id monster
             id_monster = id_shop('data/monster_shop.csv')
+            # data untuk monster
             data_monster = csv_to_array("data/monster.csv")
         
-            data_monsterid = []
+            data_monsterid = [] # membuat array untuk menyimpan data
             id_add = []
         
             # id monster yang ada di database tetapi belum ada di shop
-            # ini cek biar bisa menambahkan 
+            # cek biar bisa menambahkan 
             for i in range(len(data_monster)):
+                # apabila ada data yang belum ada di shop
                 if data_monster[i][0] not in id_monster:
                     data_monsterid.append(data_monster[i])
                     if data_monster[i][0] != "id":
                         id_add.append((data_monster[i][0]))
-                    
+            
+            # jika sudah ada semua maka tidak ada yang bisa ditambahkan lagi
             if len(data_monsterid) == 1:
                 print("Tidak ada monster yang dapat ditambahkan!")
                 break
         
+            # menghasilkan data terbaru
             table(data_monsterid)
             monster_shop = []
             
             # cek masukkan id, stok, dan harga
             while True:
-                # cek masukkan id
+                # cek masukkan id apakah ada atau tidak
                 id = input("Masukkan ID monster: ")
                 if not id not in id_add:
                     print("ID salah! Masukkan lagi")
@@ -128,7 +133,6 @@ def add():
                 else:
                     monster_shop.append(id)
                     break
-                # Input dan validasi input stok awal
             while True:
                 # cek masukkan stok
                 stok = input("Masukkan stok awal: ")
@@ -138,7 +142,6 @@ def add():
                 else:
                     monster_shop.append(stok)
                     break
-                # Input dan validasi input harga
             while True:
                 # cek  masukkan harga
                 harga = input("Masukkan harga: ")
@@ -149,35 +152,37 @@ def add():
                     monster_shop.append(harga)
                     break
                 
-        # Menambahkan monter baru pada monster_shop.csv
+            # Menyimpan monster baru pada monster_shop.csv
             id_monster = csv_to_array("data/monster_shop.csv")
             id_monster.append(monster_shop)
-            print("Monster baru telah berhasil ditambahkan ke dalam toko!")
+            print("Monster baru berhasil ditambahkan ke dalam toko!")
             
             break
     
         else: # add_things == "potion" 
+            # membaca data
             data_potionshop = csv_to_array("data/item_shop.csv")
-            list_potionshop = []
+            potion_shop = [] # menyimpan list potion yang belum ada di shop
             
             for i in range(1, len(data_potionshop)):
-                list_potionshop.append(data_potionshop[i][0])
+                potion_shop.append(data_potionshop[i][0])
 
-                # Menambahkan data
+        
                 data_potionid = []
                 data_potionid.append(["ID", "TYPE"])
-                if "strength" not in list_potionshop:
+                # data akan dimasukkan ke data_potionid
+                if "strength" not in potion_shop:
                     data_potionid.append([str(len(data_potionid)), "strength"])
-                if "resilience" not in list_potionshop:
+                if "resilience" not in potion_shop:
                     data_potionid.append([str(len(data_potionid)), "resilience"])
-                if "healing" not in list_potionshop:
+                if "healing" not in potion_shop:
                     data_potionid.append([str(len(data_potionid)), "healing"])
                 
                 if len(data_potionid) == 1:
                     print("Tidak ada potion yang dapat ditambahkan!")
                     break
 
-                #  Menampilkan data potion yang tidak terdapat pada shop namun ada pada database
+                #  Menampilkan data potion terbaru
                 table(data_potionid)
 
                 # List ID yang dapat ditambah untuk validasi input
@@ -185,10 +190,12 @@ def add():
                 for i in range(1, len(data_potionid)):
                     id_tambah.append(data_potionid[i][0])
 
-                # Meminta input potion yang ingin ditambahkan
+                # Untuk input potion yang ingin ditambahkan
                 potion_baru = []
                 
+                # validasi id, stok, dan harga
                 while True:
+                    # cek apakah id valid atau tidak
                     id = input("Masukkan ID potion: ")
                     if id not in id_tambah:
                         print("ID salah! Masukkan ID kembali")
@@ -196,8 +203,8 @@ def add():
                     else:
                         potion_baru.append(data_potionid[int(id)][1])
                         break
-                # Input dan validasi input stok awal
                 while True:
+                    # cek apakah stok valid atau tidak
                     stok = input("Masukkan stok awal: ")
                     if not int(stok) < 0:
                         print("Stok tidak bisa lebih kecil dari nol!")
@@ -205,8 +212,8 @@ def add():
                     else:
                         potion_baru.append(stok)
                         break
-                # Input dan validasi input harga
                 while True:
+                    # cek apakah harga valid atau tidak
                     harga = input(" Masukkan harga: ")
                     if not int(harga) < 0:
                         print("Harga tidak bisa lebih kecil dari nol!")
@@ -215,11 +222,9 @@ def add():
                         potion_baru.append(harga)
                         break
                 
-                # Menambahkan potion baru pada item shop
+                # Menyimpan potion baru
                 data_potionid.append(potion_baru)
-                print("Potion baru telah berhasil ditambahkan ke dalam shop")
-                    
-                # Keluar dari subprogram tambah
+                print("Potion baru berhasil ditambahkan ke dalam toko!")
                 break
 
 # Aksi update
@@ -254,7 +259,7 @@ def update():
                 else:
                     break
             
-            # Update stok dan harga terbaru melalui ID
+            # Update stok dan harga terbaru melalui ke file monster_shop
             data_monstershop = csv_to_array("data/monster_shop.csv")
             for i in range(len(data_monstershop)):
                 if data_monstershop[i][0] == id:
@@ -264,7 +269,8 @@ def update():
                 break
 
         else: # update == "potion"
-            # Menunjukkan data potion pada shop
+            
+            # Menampilkan data potion pada shop
             csv_to_array(read_filepotion())
 
             data_potionshop = csv_to_array("data/item_shop.csv")
@@ -314,6 +320,7 @@ def delete():
             while True:
                 id_delete = input("Masukkan id monster: ")
                 if id_delete not in id_monster:
+                    # monster yang ingin dihapus harus memiliki id yang benar
                     print("ID salah! Masukkan ID kembali")
                     continue
                 else: 
@@ -339,6 +346,7 @@ def delete():
             # Menampikan data potion pada shop
             csv_to_array(read_filepotion())
             data_potionshop = csv_to_array("data/item_shop.csv")
+            
             id_delete = [str(i) for i in range(1, len(data_potionshop))]
 
             while True:
