@@ -15,7 +15,7 @@ from src.exit import *
 from src.monster_management import *
 from src.inventory import *
 from src.battle import *
-# from src.arena import *
+from src.arena import *
 # from src.shopcurrency import *
 from src.laboratory import *
 
@@ -117,7 +117,7 @@ else:
                         if(win):
                             array_user[user_id] = dapet_duit(array_user[user_id])
                     elif perintah == "ARENA":
-                        pass
+                        oc_received = arena(array_monster, array_monster_inventory, array_item_inventory, user_id, 1)
                     elif perintah == "SHOP":
                         pass
                     elif perintah == "LABORATORY":
