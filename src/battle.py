@@ -31,7 +31,7 @@ def pilih_monster(user_id: int, monster_inventory: list, monsterarray: list) -> 
             monster_id = int(monster_inventory[i][1])
             print(f"{count}. {monsterarray[monster_id][1]}")
             count += 1
-            pilihan_monster.append(monsterarray[i].copy())
+            pilihan_monster.append(monsterarray[monster_id].copy())
     return pilihan_monster
 
 def gambar_monster_user(): # Untuk mengeprint gambar monster yang dipilih user
@@ -138,7 +138,7 @@ Level     : 1
 
 """)
 def dapet_duit(user: list)-> list:
-    OC = generate_number(defaultlcg, [5, 31])
+    OC = generate_number(lcg(a=48271, c=0, m=2**31-1, seed=None), [5, 31])
     print(f"OC yang diperoleh: {OC}")
     user_oc = int(user[4])
     user_oc += OC
@@ -148,7 +148,7 @@ def dapet_duit(user: list)-> list:
 # Mulai program
 def battle(monsterarray: list, monster_inventory: list, item_inventory: list, user_id: int, bot_battle_monster_level: int, arena: bool)->bool:
     win = False # Boolean untuk hasil battle
-    monster_muncul_id = generate_number(defaultlcg, [1,len(monsterarray)])
+    monster_muncul_id = generate_number(lcg(a=48271, c=0, m=2**31-1, seed=None), [1,len(monsterarray)])
     munculmonster(monsterarray, monster_muncul_id)
     print(r"============ MONSTER LIST ============")
     pilihan_monster = pilih_monster(user_id, monster_inventory, monsterarray)

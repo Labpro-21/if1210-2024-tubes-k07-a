@@ -29,6 +29,6 @@ def generate_number(x_prev, num_range=None): # Fungsi ini bakal ngambil x_prev d
     else:
         return int((x_prev / (m - 1)) * (num_range[1] - num_range[0]) + num_range[0])
 
-defaultlcg = lcg(a=48271, c=0, m=2**31-1, seed=None)
+# defaultlcg = lcg(a=48271, c=0, m=2**31-1, seed=None)
     
 # print(generate_number(defaultlcg ,[0,31]))                                                                
