@@ -93,7 +93,7 @@ def read_filepotion():
         
     return data_potion
 
-def tambah():
+def add():
     while True:
         add_things = input("Mau menambahkan apa? (monster/potion): ").lower()
         if add_things == 'monster':
@@ -378,11 +378,11 @@ def shop_management():
         if choice == '1':
             display()
         elif choice == '2':
-            tambah()
+            add()
         elif choice == '3':
             update()
         elif choice == '4':
-            hapus()
+            delete()
         elif choice == '5':
             print("Anda sudah keluar dari toko. Terima kasih!")
             print("Terima kasih! Progress terakhir telah disimpan.")
