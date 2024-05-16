@@ -113,11 +113,13 @@ else:
                     elif perintah == "INVENTORY":
                         inventory(array_user[user_id], array_item_inventory, array_monster_inventory, array_monster)
                     elif perintah == "BATTLE":
-                        win = battle(array_monster, array_monster_inventory, array_item_inventory, user_id, 1)
+                        win = battle(array_monster, array_monster_inventory, array_item_inventory, user_id, 1, False)
                         if(win):
                             array_user[user_id] = dapet_duit(array_user[user_id])
                     elif perintah == "ARENA":
                         oc_received = arena(array_monster, array_monster_inventory, array_item_inventory, user_id, 1)
+                        oc_received += int(array_user[user_id][4])
+                        array_user[user_id][4] = oc_received
                     elif perintah == "SHOP":
                         pass
                     elif perintah == "LABORATORY":
