@@ -13,7 +13,7 @@ item_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-
 monster_inventory = csv_to_array(r"D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster_inventory.csv")
 user_id = 3
 
-def pilih_monster(user_id: int, monster_inventory: list, monsterarray: list):
+def pilih_monster(user_id: int, monster_inventory: list, monsterarray: list) -> list:
     count = 1 # Nomor list
     # i adalah user id
     pilihan_monster = []
