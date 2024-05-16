@@ -7,7 +7,7 @@
 # item_inventory : matriks
 # status_potion : dictionary (str:bool)
 # nama_monster : string
-def is_integer(user_input: str):
+def is_integer(user_input: str) -> bool:
     for char in str(user_input):
         if (ord(char) < ord('0')) or (ord(char) > ord('9')):
             return False
