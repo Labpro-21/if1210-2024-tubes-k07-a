@@ -1,165 +1,371 @@
 # Program: Shop management
 # Writer: Felicia Kannitha Ruth
-# Hari, tanggal: 14 Mei 2024
+# Hari, tanggal: 16 Mei 2024
 # Note: 
 
-monsters = [
-    { 'id': 1, 'type': "Pikachow", 'atk_power': 125, 'def_power': 10, 'hp': 600, 'stok': 10, 'harga': 500 },
-    { 'id': 2, 'type': "Bulbu", 'atk_power': 50, 'def_power': 50, 'hp': 1200, 'stok': 4, 'harga': 700 },
-    { 'id': 3, 'type': "Zeze", 'atk_power': 300, 'def_power': 10, 'hp': 100, 'stok': 3, 'harga': 1000 },
-    { 'id': 4, 'type': "Zuko", 'atk_power': 100, 'def_power': 25, 'hp': 800, 'stok': 8, 'harga': 550 },
-    { 'id': 5, 'type': "Chacha", 'atk_power': 80, 'def_power': 30, 'hp': 700, 'stok': 8, 'harga': 550 },
-    { 'id': 6, 'type': "Sukuna", 'atk_power': 650, 'def_power': 30, 'hp': 1000, 'stok': 0, 'harga': 0 }
-]
+# fungsi untuk membaca file
+def csv_to_array (path):
+    lines = []
+    with open(path, 'r') as file:
+        for row in file:
+            lines.append(row) # Mengubah csv menjadi array per baris 
+    array = []
+    for line in lines:
+        row = []
+        kata = ''
+        for elmt in line:
+            if elmt != ';' and elmt != '\n':
+                kata += elmt
+            elif elmt == ';':
+                row.append(kata)
+                kata = ''
+        row.append(kata)
+        array.append(row)
+    return array
 
+# fungsi untuk mengeluarkan list dengan rapih
+def table(array):
+    max_lengths = [0] * len(array[0]) # inisialisasi panjang maksimum dengan angka 0
+    for line in array:
+        for i in range(len(line)):
+            item_length = len(str(line[i]))
+            if item_length > max_lengths[i]:
+                max_lengths[i] = item_length # mencari panjang maksimum untuk mengetahui berapa banyak whitespace yang perlu ditambahkan
+    for line in array:
+        for i in range(len(line)):
+            item = line[i]
+            num_spaces = max_lengths[i] - len(str(item))  # menambah whitespace sesuai panjang maksimum dikurangi panjang item
+            if i < len(line) - 1: # kalau bukan akhir dari tabel tambahkan "|"
+                print(item, end=" " * num_spaces + " | ")
+            else: # untuk akhir dari tabel tidak perlu ditambah "|"
+                print(item, end=" " * num_spaces + " ")
+        print()
 
-potions = [
-    { 'id': 1, 'type': "strength", 'stok': 5, 'harga': 10 },
-    { 'id': 2, 'type': "resilience", 'stok': 3, 'harga': 5 },
-    { 'id': 3, 'type': "resilience", 'stok': 7, 'harga': 3 },
-    { 'id': 4, 'type': "healing", 'stok': 3, 'harga': 0 },
-    { 'id': 5, 'type': "strength", 'stok': 20, 'harga': 0 } 
-]            
-
-def create_shop(name):
-    return {'name': name, 'items': []}
-
-# PILIHAN PERTAMA UNTUK MELIHAT MONSTER
-def show_monster_list(monster_list):
-    # Print the header
-    print(f"{'ID':<5} {'Type':<10} {'Attack':<8} {'Defense':<8} {'HP':<5} {'Stok':<5} {'Harga':<5}")
-    print("="*60)
+def id_shop(csv_file):
+    # Akan digunakan untuk mengecek id yang akan digunakan
+    # saat akan membeli monster / potion
+    id = []
+    data = csv_to_array(csv_file)
+    for i in range(1, len(data)):
+        id.append(data[i][0])
     
-    # Print each monster's details
-    for monster in monster_list:
-        print(f"{monster['id']:<5} {monster['type']:<10} {monster['atk_power']:<8} {monster['def_power']:<8} {monster['hp']:<5} {monster['stok']:<5} {monster['harga']:<5}")
+    return id
 
-def show_potion_list(potion_list):
-    # Print the header
-    print(f"{'ID':<5} {'Type':<12} {'Stok':<5} {'Harga':<5}")
-    print("="*30)
+# fungsi untuk mengeluarkan list dari monster/potion 
+# pilihan aksi pertama dari Main (Lihat)
+def display():
+    # validasi aksi yang akan dilakukan
+    item_type = input("Anda ingin melihat Potion/Monster: ")
+    if item_type.lower() == 'monster':
+        table(read_filemonster())
+    elif item_type.lower() == 'potion':
+        table(read_filepotion())
+    else:
+        print("Masukkan anda tidak valid. Masukkan lagi!")
+
+# fungsi untuk membaca file dari monster dan dari potion
+def read_filemonster():
+    data_monsternew = []
+    data_monstershop = csv_to_array('data/monster_shop.csv')
+    data_monster = csv_to_array('data/monster.csv')
+    #baca data dari file csv monster dan monster shop
     
-    # Print each potion's details
-    for potion in potion_list:
-        harga = potion['harga'] if potion['harga'] is not None else 0
-        print(f"{potion['id']:<5} {potion['type']:<12} {potion['stok']:<5} {harga:<5}")
+    data_monsternew.append (["id", "type", "atk_power", "def_power", "hp", "stok", "harga"])
+    for i in range (1, len(data_monstershop)):
+        for j in range (1, len(data_monster)):
+            if data_monster [j][0] == data_monstershop[i][0]:
+                data_monsternew.append(
+                    [data_monster[j][0], data_monster[j][1], 
+                     data_monster[j][2], data_monster[j][3],
+                     data_monster[j][4], data_monstershop[i][1],
+                     data_monstershop[i][2]])
+    return data_monsternew
+
+def read_filepotion():
+    data_potionshop = csv_to_array('data/item_shop.csv')
+
+    # membuat id untuk data potion karena belum tersedia di csv item shop
+    data_potion = []
+    data_potion.append(["id", data_potionshop[0][0], data_potionshop[0][1], data_potionshop[0][2]])
+    
+    for i in range(1, len(data_potionshop)):
+        data_potion.append([str(i), data_potionshop[i][0], data_potionshop[i][1], data_potionshop[i][2]])
         
-# Fungsi untuk menambahkan monster baru
-def add_monster(shop):
-    id_ = int(input("Masukkan ID monster: "))
+    return data_potion
+
+def tambah():
+    while True:
+        add_things = input("Mau menambahkan apa? (monster/potion): ").lower()
+        if add_things == 'monster':
+            id_monster = id_shop('data/monster_shop.csv')
+            data_monster = csv_to_array("data/monster.csv")
+        
+            data_monsterid = []
+            id_add = []
+        
+            # id monster yang ada di database tetapi belum ada di shop
+            # ini cek biar bisa menambahkan 
+            for i in range(len(data_monster)):
+                if data_monster[i][0] not in id_monster:
+                    data_monsterid.append(data_monster[i])
+                    if data_monster[i][0] != "id":
+                        id_add.append((data_monster[i][0]))
+                    
+            if len(data_monsterid) == 1:
+                print("Tidak ada monster yang dapat ditambahkan!")
+                break
+        
+            table(data_monsterid)
+            monster_shop = []
+            
+            # cek masukkan id, stok, dan harga
+            while True:
+                # cek masukkan id
+                id = input("Masukkan ID monster: ")
+                if not id not in id_add:
+                    print("ID salah! Masukkan lagi")
+                    continue
+                else:
+                    monster_shop.append(id)
+                    break
+                # Input dan validasi input stok awal
+            while True:
+                # cek masukkan stok
+                stok = input("Masukkan stok awal: ")
+                if int(stok) < 0:
+                    print("Stok awal harus lebih besar dari nol!")
+                    continue
+                else:
+                    monster_shop.append(stok)
+                    break
+                # Input dan validasi input harga
+            while True:
+                # cek  masukkan harga
+                harga = input("Masukkan harga: ")
+                if int(harga) < 0:
+                    print("Harga harus lebih besar dari nol!")
+                    continue
+                else:
+                    monster_shop.append(harga)
+                    break
+                
+        # Menambahkan monter baru pada monster_shop.csv
+            id_monster = csv_to_array("data/monster_shop.csv")
+            id_monster.append(monster_shop)
+            print("Monster baru telah berhasil ditambahkan ke dalam toko!")
+            
+            break
     
-    # Validasi ID
-    for monster in shop:
-        if monster['id'] == id_:
-            print("ID yang dimasukkan sudah ada, mohon masukkan ID yang lain.")
-            return
+        else: # add_things == "potion" 
+            data_potionshop = csv_to_array("data/item_shop.csv")
+            list_potionshop = []
+            
+            for i in range(1, len(data_potionshop)):
+                list_potionshop.append(data_potionshop[i][0])
+
+                # Menambahkan data
+                data_potionid = []
+                data_potionid.append(["ID", "TYPE"])
+                if "strength" not in list_potionshop:
+                    data_potionid.append([str(len(data_potionid)), "strength"])
+                if "resilience" not in list_potionshop:
+                    data_potionid.append([str(len(data_potionid)), "resilience"])
+                if "healing" not in list_potionshop:
+                    data_potionid.append([str(len(data_potionid)), "healing"])
+                
+                if len(data_potionid) == 1:
+                    print("Tidak ada potion yang dapat ditambahkan!")
+                    break
+
+                #  Menampilkan data potion yang tidak terdapat pada shop namun ada pada database
+                table(data_potionid)
+
+                # List ID yang dapat ditambah untuk validasi input
+                id_tambah = []
+                for i in range(1, len(data_potionid)):
+                    id_tambah.append(data_potionid[i][0])
+
+                # Meminta input potion yang ingin ditambahkan
+                potion_baru = []
+                
+                while True:
+                    id = input("Masukkan ID potion: ")
+                    if id not in id_tambah:
+                        print("ID salah! Masukkan ID kembali")
+                        continue
+                    else:
+                        potion_baru.append(data_potionid[int(id)][1])
+                        break
+                # Input dan validasi input stok awal
+                while True:
+                    stok = input("Masukkan stok awal: ")
+                    if not int(stok) < 0:
+                        print("Stok tidak bisa lebih kecil dari nol!")
+                        continue
+                    else:
+                        potion_baru.append(stok)
+                        break
+                # Input dan validasi input harga
+                while True:
+                    harga = input(" Masukkan harga: ")
+                    if not int(harga) < 0:
+                        print("Harga tidak bisa lebih kecil dari nol!")
+                        continue
+                    else:
+                        potion_baru.append(harga)
+                        break
+                
+                # Menambahkan potion baru pada item shop
+                data_potionid.append(potion_baru)
+                print("Potion baru telah berhasil ditambahkan ke dalam shop")
+                    
+                # Keluar dari subprogram tambah
+                break
+
+# Aksi update
+def update():
+    while True:
+        update = input("Komponen apa yang ingin diperbaharui? (monster/potion): ")
+        if update == "monster":
+            
+            # Menampilkan list dari monster yang ada
+            id_monster = id_shop("data/monster_shop.csv")
+            
+            # Validasi ID, stok, dan harga
+            while True:
+                id = input("Masukkan ID monster: ")
+                if id not in id_monster:
+                    print("ID salah! Masukkan ID kembali")
+                    continue
+                else:
+                    break
+            while True:
+                harga = input("Masukkan harga baru: ")
+                if int(harga) < 0:
+                    print("Harga tidak bisa lebih kecil dari nol!")
+                    continue
+                else:
+                    break
+            while True:
+                stok = input("Masukkan stok baru: ")
+                if int(stok) < 0:
+                    print("Stok tidak bisa lebih kecil dari nol!")
+                    continue
+                else:
+                    break
+            
+            # Update stok dan harga terbaru melalui ID
+            data_monstershop = csv_to_array("data/monster_shop.csv")
+            for i in range(len(data_monstershop)):
+                if data_monstershop[i][0] == id:
+                    data_monstershop[i][1] = stok
+                    data_monstershop[i][2] = harga
+
+                break
+
+        else: # update == "potion"
+            # Menunjukkan data potion pada shop
+            csv_to_array(read_filepotion())
+
+            data_potionshop = csv_to_array("data/item_shop.csv")
+            id_potion = [str(i) for i in range(1, len(data_potionshop))]
+            
+            # Validasi ID, stok, dan harga
+            while True:
+                id = input("Masukkan ID potion: ")
+                if id not in id_potion:
+                    print("ID salah! Masukkan ID kembali")
+                    continue
+                else:
+                    break
+            while True:
+                harga = input("Masukkan harga baru: ")
+                if int(harga) < 0:
+                    print("Harga tidak bisa lebih kecil dari nol!")
+                    continue
+                else:
+                    break
+            while True:
+                stok = input("Masukkan stok baru: ")
+                if int(stok) < 0:
+                    print("Stok tidak bisa lebih kecil dari nol!")
+                    continue
+                else:
+                    break
+
+                # Update stok dan harga terbaru melalui ID
+            for i in range(len(data_potionshop)):
+                if str(i) == id:
+                    data_potionshop[i][1] = stok
+                    data_potionshop[i][2] = harga
+            
+                break
+
+# Aksi delete
+def delete():
+    while True:
+        delete = input("Komponen apa yang ingin dihapus? (monster/potion): ")
+        if delete == "monster":
+            
+            # Menampilkan list monster yang ada  
+            csv_to_array(read_filemonster())
+            id_monster = id_shop("data/monster_shop.csv")
+            
+            while True:
+                id_delete = input("Masukkan id monster: ")
+                if id_delete not in id_monster:
+                    print("ID salah! Masukkan ID kembali")
+                    continue
+                else: 
+                    break   
+                
+            while True:
+                check = input("Apakah anda yakin ingin menghapus monster dari toko (iya/tidak): ")
+                if check.lower() == 'iya':
+                # update data monster terbaru
+                    data_monstershop = csv_to_array("data/monster_shop.csv")
+                    data_update = []
+                    for i in range(len(data_monstershop)):
+                        if data_monstershop[i][0] != id:
+                            data_update.append(data_monstershop[i])
+                    break
+                elif check.lower() == 'tidak':
+                    break
+                else: # masukkan selain iya atau tidak
+                    print("Masukkan salah!")
+                    
+        else: # delete == 'potion'
+            
+            # Menampikan data potion pada shop
+            csv_to_array(read_filepotion())
+            data_potionshop = csv_to_array("data/item_shop.csv")
+            id_delete = [str(i) for i in range(1, len(data_potionshop))]
+
+            while True:
+                id = input("Masukkan ID potion: ")
+                if id not in id_delete:
+                    print("ID salah! Masukkan ID kembali")
+                    continue
+                else:
+                    break
+
+            while True:
+                check = input("Apakah anda yakin ingin menghapus potion dari toko (iya/tidak): ")
+                if check.lower() == 'iya':
+                    data_update = []
+                    for i in range(len(data_potionshop)):
+                        if str(i) != id:
+                            data_update.append(data_potionshop[i])
+                        break
+                elif check.lower() == 'tidak':
+                    break
+                else: # masukkan selain iya atau tidak
+                    print("Masukkan salah!")
+        break
     
-    type_ = input("Masukkan tipe monster: ")
-    atk_power = int(input("Masukkan kekuatan serangan monster: "))
-    def_power = int(input("Masukkan kekuatan pertahanan monster: "))
-    hp = int(input("Masukkan HP monster: "))
-    stok = int(input("Masukkan stok monster: "))
-    harga = int(input("Masukkan harga monster: "))
-
-    monster = {
-        'id': id_,
-        'type': type_,
-        'atk_power': atk_power,
-        'def_power': def_power,
-        'hp': hp,
-        'stok': stok,
-        'harga': harga
-    }
-
-    shop.append(monster)
-    print("Monster baru berhasil ditambahkan ke toko!")
-
-# Fungsi untuk menambahkan potion baru
-def add_potion(shop):
-    id_ = int(input("Masukkan ID potion: "))
-    
-    # Validasi ID
-    for potion in shop:
-        if potion['id'] == id_:
-            print("ID yang dimasukkan sudah ada, mohon masukkan ID yang lain.")
-            return
-    
-    type_ = input("Masukkan tipe potion: ")
-    stok = int(input("Masukkan stok potion: "))
-    harga = int(input("Masukkan harga potion: "))
-
-    potion = {
-        'id': id_,
-        'type': type_,
-        'stok': stok,
-        'harga': harga
-    }
-
-    shop.append(potion)
-    print("Potion baru berhasil ditambahkan ke toko!")
-
-# Fungsi untuk memperbarui informasi monster
-def update_monster(shop):
-    id_ = int(input("Masukkan ID monster: "))
-    for item in shop:
-        if item['id'] == id_:
-            stok = input("Masukkan stok baru dari monster (tekan enter apabila tidak ingin diubah): ")
-            if stok:
-                item['stok'] = int(stok)
-            harga = input("Masukkan harga baru dari monster (tekan enter apabila tidak ingin diubah): ")
-            if harga:
-                item['harga'] = int(harga)
-            print(f"Monster dengan ID {id_} berhasil diperbaharui!")
-            return
-    print("Monster tidak ditemukan, cek ID monster!")
-
-# Fungsi untuk memperbarui informasi potion
-def update_potion(shop):
-    id_ = int(input("Masukkan ID potion: "))
-    for item in shop:
-        if item['id'] == id_:
-            stok = input("Masukkan stok baru dari potion (tekan enter apabila tidak ingin diubah): ")
-            if stok:
-                item['stok'] = int(stok)
-            harga = input("Masukkan harga baru dari potion (tekan enter apabila tidak ingin diubah): ")
-            if harga:
-                item['harga'] = int(harga)
-            print(f"Potion dengan ID {id_} berhasil diperbaharui!")
-            return
-    print("Potion tidak ditemukan, cek ID potion!")
-
-# Fungsi untuk menghapus monster
-def delete_monster(shop):
-    id_ = int(input("Masukkan ID monster: "))
-    for i, monster in enumerate(shop):
-        if monster['id'] == id_:
-            re_ask = input("Apakah anda yakin ingin menghapus monster ini? (iya/tidak): ")
-            if re_ask.lower() == 'iya':
-                del shop[i]
-                print(f"Monster berhasil dihapus!")
-                return
-            else:
-                print("Penghapusan monster tidak jadi dilaksanakan.")
-                return
-    print("Monster tidak ditemukan, cek ID monster!")
-
-# Fungsi untuk menghapus potion
-def delete_potion(shop):
-    id_ = int(input("Masukkan ID potion: "))
-    for i, potion in enumerate(shop):
-        if potion['id'] == id_:
-            re_ask = input("Apakah anda yakin ingin menghapus potion ini? (iya/tidak): ")
-            if re_ask.lower() == 'iya':
-                del shop[i]
-                print(f"Potion berhasil dihapus!")
-                return
-            else:
-                print("Penghapusan potion tidak jadi dilaksanakan.")
-                return
-    print("Potion tidak ditemukan, cek ID potion!")
-    
+# contoh penggunaan dan tampilan akan seperti apa
 # tampilan yang akan keluar
-def shop_management(shop):
+def shop_management():
     while True:
         print("Shop Management System (Admin)")
         print("1. Lihat")
@@ -170,54 +376,19 @@ def shop_management(shop):
         choice = input("Masukkan pilihan anda: ")
 
         if choice == '1':
-            print("Apa yang ingin anda lihat?")
-            print("1. Monster")
-            print("2. Potion")
-            view_choice = input("Masukkan pilihan angka anda: ")
-            if view_choice == '1':
-                show_monster_list(monsters)
-            elif view_choice == '2':
-                show_potion_list(potions)
-            else:
-                print("Pilihan tidak valid, masukkan angka kembali!")
-
+            display()
         elif choice == '2':
-            print("Komponen apa yang ingin anda tambahkan?")
-            print("1. Monster")
-            print("2. Potion")
-            add_choice = input("Masukkan pilihan angka anda: ")
-            if add_choice == '1':
-                add_monster(monsters)
-            elif add_choice == '2':
-                add_potion(potions)
-
+            tambah()
         elif choice == '3':
-            print("Komponen apa yang ingin anda perbaharui?")
-            print("1. Monster")
-            print("2. Potion")
-            update_choice = input("Masukkan pilihan angka anda: ")
-            if update_choice == '1':
-                update_monster(monsters)
-            elif update_choice == '2':
-                update_potion(potions)
-
+            update()
         elif choice == '4':
-            print("Komponen apa yang ingin anda hapus?")
-            print("1. Monster")
-            print("2. Potion")
-            delete_choice = input("Masukkan pilihan angka anda: ")
-            if delete_choice == '1':
-                delete_monster(monsters)
-            elif delete_choice == '2':
-                delete_potion(potions)
-
+            hapus()
         elif choice == '5':
-            print(f"Anda sudah keluar dari toko {shop}. Terima kasih!")
+            print("Anda sudah keluar dari toko. Terima kasih!")
             print("Terima kasih! Progress terakhir telah disimpan.")
             break
 
         else:
             print("Pilihan tidak valid, masukkan angka kembali!.")
-
-shop = create_shop("Phineas")
-shop_management(shop)
+            
+shop_management()
