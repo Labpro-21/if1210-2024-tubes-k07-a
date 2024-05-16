@@ -39,7 +39,7 @@ def arena(monsterarray: list, monster_inventory: list, item_inventory: list, use
     ============== STATS ==============
     Total hadiah      : {total_OC} OC
     Jumlah stage      : {stage}
-    Damage diberikan  : {total_damage_dealt}
-    Damage diterima   : {total_damage_taken}
+    Damage diberikan  : {int(total_damage_dealt)}
+    Damage diterima   : {int(total_damage_taken)}
     """)
     return total_OC    
