@@ -4,8 +4,6 @@
 # Note: logout dilakukan saat login sudah dilaksanakan
 
 # Algoritma
-from monster import csv_to_array
-
 def check_login():
     return False
 
