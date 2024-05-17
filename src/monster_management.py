@@ -22,7 +22,7 @@ def monster_management(array_monster: list) -> list:
     action = input('>>> Pilih aksi yang ingin dilakukan: ')
     while (action != '1') and (action != '2'):
         print('Aksi yang dipilih tidak ditemukan.')
-        action = input('Pilih aksi yang ingin dilakukan: ')
+        action = input('>>> Pilih aksi yang ingin dilakukan: ')
     if (action == '1'):
         print(f"{'ID':<3} | {'Type':<15} | {'ATK Power':<10} | {'DEF Power':<10} | {'HP':<5}")
         for i in range (1, len(array_monster)):
@@ -66,7 +66,7 @@ def monster_management(array_monster: list) -> list:
         confirm = input('>>> Tambahkan monster ke database (Y/N): ')
         while (confirm != 'Y') and (confirm != 'y') and (confirm != 'N') and (confirm != 'n'):
             print('Input tidak valid!')
-            confirm = input('>>> Lanjutkan upgrade (Y/N): ')
+            confirm = input('>>> Tambahkan monster ke database (Y/N): ')
         if (confirm == 'Y') or (confirm == 'y'):
             #add new monster details
             new_monster = [
