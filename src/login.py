@@ -13,7 +13,7 @@ def login(logged_in: bool, user_id: int, array_user: list) -> (bool, str):
     if not logged_in:
         while True:
             print("Pilih aksi dibawah ini:")
-            print("1. Login\n2. Keluar")
+            print("1. Login\n2. Keluar\n")
             aksi = input("Masukkan angka dari aksi yang ingin kamu lakukan: ")
             if aksi == "1":
                 username_found = False

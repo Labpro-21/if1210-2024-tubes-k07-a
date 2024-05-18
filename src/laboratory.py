@@ -17,7 +17,7 @@ def is_integer(user_input: str) -> bool:
 def laboratory(array_user: list, array_monster_inventory: list, array_monster: list, user_id: int) -> (list, list):
     print('Kamu telah memasuki area lab monster!\n')
     while True:
-        print("Pilih aksi yang ingin Anda lakukan!\n1. Upgrade monster\n2. Keluar")
+        print("Pilih aksi yang ingin Anda lakukan!\n1. Upgrade monster\n2. Keluar\n")
         aksi = input("Ketik angka dari aksi yang ingin Anda lakukan: ")
         print()
         if aksi == "1": 
