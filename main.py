@@ -1,5 +1,4 @@
-# Note : Belum ada pengecekan ketika user tidak memberikan nama folder (Masih "error: the following arguments are required: folder")
-
+# ALGORITMA
 import os
 import sys
 import time
@@ -23,7 +22,7 @@ parser = argparse.ArgumentParser(description="load data dari folder yang dipilih
 parser.add_argument("folder", nargs='?', help="nama folder yang berisi data yang ingin di load")
 args = parser.parse_args()
 
-# mengeluarkan error message
+# mengeluarkan error message jika nama folder tidak diberikan
 if not args.folder:
     print("Tidak ada nama folder yang diberikan!")
     print("Usage : python main.py <nama_folder>")
@@ -54,8 +53,9 @@ else:
         role = ''
         user_id = 0
         # meminta perintah berikutnya
-        print('Ketik "HELP" untuk melihat menu')
-        perintah = input(">>> ")
+        print('Masukkan perintah!\nKetik "HELP" untuk melihat menu')
+        perintah = input(">>> ").upper()
+        print()
         while True:
             if logged_in == False:
                 if perintah == "HELP" or perintah == "MENU":
@@ -74,7 +74,7 @@ else:
                         save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
                     break
                 else:
-                    print("perintah tidak valid!")
+                    print("Perintah tidak valid! Pastikan input sudah benar.")
             elif logged_in == True:
                 # mendapatkan role user yang sedang login
                 username = array_user[user_id][1]
@@ -134,9 +134,10 @@ else:
                     else:
                         print("Perintah tidak valid!")
     
-            perintah = input(">>> ")
+            print()
+            print('Masukkan perintah!\nKetik "HELP" untuk melihat menu')
+            perintah = input(">>> ").upper()
                 
-    
     # keluar dari program jika nama folder tidak ditemukan
     elif check_folder == False:
-        print('Folder "'+args.folder+'" tidak ditemukan')
+        print('Folder "'+args.folder+'" tidak ditemukan!')
