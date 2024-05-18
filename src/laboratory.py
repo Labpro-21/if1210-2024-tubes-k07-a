@@ -74,9 +74,9 @@ def laboratory(array_user: list, array_monster_inventory: list, array_monster: l
                     else:
                         print('Upgrade berhasil!\n')
                         level += 1
-                        array_monster_inventory[idx[upgrade_id - 1]][2] = level
+                        array_monster_inventory[idx[upgrade_id - 1]][2] = str(level)
                         coin_amt -= price
-                        array_user[user_id][4] = coin_amt
+                        array_user[user_id][4] = str(coin_amt)
                         print(f'{array_monster[int(array_monster_inventory[idx[upgrade_id - 1]][1])][1]} sekarang ada di level {level}!\n')
                 else:
                     print('Upgrade dibatalkan.\n')
