@@ -14,5 +14,5 @@ def exit() -> bool:
         elif reassure == "N":
             return False
         else:
-            print("Input tidak valid")
+            print("Input tidak valid! Masukkan ulang input!")
             reassure = input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (Y/N) ").upper()
