@@ -119,7 +119,7 @@ else:
                     elif perintah == "ARENA":
                         oc_received = arena(array_monster, array_monster_inventory, array_item_inventory, user_id, 1)
                         oc_received += int(array_user[user_id][4])
-                        array_user[user_id][4] = oc_received
+                        array_user[user_id][4] = str(oc_received)
                     elif perintah == "SHOP":
                         pass
                     elif perintah == "LABORATORY":
