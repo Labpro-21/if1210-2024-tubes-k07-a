@@ -41,6 +41,3 @@ def help(login: bool,role: str,username: str):
     print("Footnote:")
     print("\t1. Untuk menggunakan aplikasi, silahkan masukkan nama fungsi yang terdaftar")
     print("\t2. Jangan lupa untuk memasukkan input yang valid")
-    print()
-
-
