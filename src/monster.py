@@ -8,27 +8,6 @@
 from src.lcg import *
 # monsterfile = open("D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
 
-def csv_to_array (filepath: str) -> list: # Fungsi untuk mengubah csv menjadi array
-    lines = []
-    with open(filepath, 'r') as file:
-        for row in file:
-            lines.append(row) # Mengubah csv menjadi array per baris
-        
-    array = []
-    for line in lines:
-        row = []
-        kata = ''
-        for elmt in line:
-            if elmt != ';' and elmt != '\n':
-                kata += elmt
-            elif elmt == ';':
-                row.append(kata)
-                kata = ''
-        row.append(kata)
-        array.append(row)
-    
-    return array
-
 def attack_user(attackpower: float) -> float: # Fungsi untuk generate damage dari attack power
     x = generate_number(lcg(a=48271, c=0, m=2**31-1, seed=None), [0,2])
     tanda = 0
