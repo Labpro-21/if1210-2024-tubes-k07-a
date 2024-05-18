@@ -2,9 +2,15 @@
 # Writer: Bertha Soliany Frandi
 # Tanggal: 10 Mei 2024
 
-import argparse
 import os
+import sys
+import argparse
 
+# KAMUS
+# folder path : string
+# check_folder : bool
+
+# ALGORITMA
 parser = argparse.ArgumentParser(description="load data dari folder yang dipilih")
 parser.add_argument("folder", nargs='?', help="nama folder yang berisi data yang ingin di load")
 args = parser.parse_args()
