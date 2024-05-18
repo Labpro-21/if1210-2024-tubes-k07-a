@@ -115,7 +115,7 @@ def gambar_monster(id: str):
                       ..                             .++++*                               
                                                        .--.                               
 """)
-    elif id == "2":
+    elif id == "4":
         print(r"""                                                                                 
                                                               -=: .::                     
                                                            .:=--+--+:..                   
@@ -188,7 +188,7 @@ def gambar_monster(id: str):
                                                      .+****+-                             
                                                         .-                                
 """)
-    elif id == "4":
+    elif id == "2":
         print(r"""
                                  .-*#%@@@@@@@@@@@@@%*=:                                   
                               -#%@@@@@@@@@@@@@@@@@@@@@@@#+:                               
