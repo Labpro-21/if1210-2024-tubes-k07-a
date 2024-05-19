@@ -73,10 +73,10 @@ def cekValid(username: str, password:str, array_user: list, array_monster: list,
                 ada = True
                 username = input("Masukkan username: ")
                 password = input("Masukkan password: ")
-                break
             else:
                 ada = False
                 break
+    
     if ada == False: 
         # melakukan pengecekan terhadap password
         cekPassword(password)
@@ -117,37 +117,14 @@ def cekValid(username: str, password:str, array_user: list, array_monster: list,
     print("Masukkan angka dari monster yang dipilih.")
     monster_pilihan = input("Monster pilihanmu: ")
     while True:
-        if(is_integer(monster_pilihan)):
+        if monster_pilihan == '':
+            print("Monster harus dipilih dan tidak boleh kosong. Masukkan angka untuk monster yang ingin pilih.\n")
+        elif(is_integer(monster_pilihan)) and (int(monster_pilihan) <= 3 and int(monster_pilihan) >= 1):
             monster_pilihan = int(monster_pilihan)
             break
-        elif monster_pilihan == '':
-            print("Monster harus dipilih dan tidak boleh kosong. Masukkan angka untuk monster yang ingin pilih.\n")
         else:
             print("Input tidak valid. Coba pilih ulang.\n")
         monster_pilihan = input("Monster pilihanmu: ")
-
-    while monster_pilihan < 1 or monster_pilihan > 3:
-        print("input tidak valid. Coba pilih ulang.\n")
-        monster_pilihan = input("Monster pilihanmu: ")
-        while True:
-            if(is_integer(monster_pilihan)):
-                monster_pilihan = int(monster_pilihan)
-                break
-            elif monster_pilihan == '':
-                print("Monster harus dipilih dan tidak boleh kosong. Masukkan angka untuk monster yang ingin pilih.\n")
-            else:
-                print("Input tidak valid. Coba pilih ulang.\n")
-            monster_pilihan = input("Monster pilihanmu: ")
-
-        while monster_pilihan <= 1 and monster_pilihan >= 3:
-            print("input tidak valid. Coba pilih ulang.\n")
-            monster_pilihan = input("Monster pilihanmu: ")
-            while True:
-                if(is_integer(monster_pilihan)):
-                    monster_pilihan = int(monster_pilihan)
-                    break
-                print("input tidak valid. Coba pilih ulang.\n")
-                monster_pilihan = input("Monster pilihanmu: ")
 
         nama_monster_pilihan = array_monster[monster_pilihan][1]
         print()
