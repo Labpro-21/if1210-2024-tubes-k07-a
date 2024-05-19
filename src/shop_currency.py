@@ -173,7 +173,7 @@ def buy_potion(data_potion_inventory: list, data_potionshop: list,  data_owca: l
     return data_potion_inventory, data_potionshop, data_owca
 
 # contoh penggunaan dan tampilan akan seperti apa
-def main(data_monstershop: list, data_monster: list, data_potionshop: list, data_monster_inventory: list, data_potion_inventory: list, data_owca: list, user_id:int):
+def shopmain(data_monstershop: list, data_monster: list, data_potionshop: list, data_monster_inventory: list, data_potion_inventory: list, data_owca: list, user_id:int):
     # pilihan aksi
     while True:
         print("SHOP MENU:")

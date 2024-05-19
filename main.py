@@ -10,12 +10,12 @@ from src.login import *
 from src.logout import *
 from src.save import *
 from src.exit import *
-# from src.shop_management import *
+from src.shop_management import *
 from src.monster_management import *
 from src.inventory import *
 from src.battle import *
 from src.arena import *
-# from src.shopcurrency import *
+from src.shop_currency import *
 from src.laboratory import *
 
 parser = argparse.ArgumentParser(description="load data dari folder yang dipilih")
@@ -89,7 +89,7 @@ else:
                     elif perintah == "LOGOUT":
                         logged_in = logout(logged_in)
                     elif perintah == "SHOP MANAGEMENT": 
-                        pass
+                        array_monster_shop, array_item_shop = shop_management(array_monster_shop, array_monster, array_item_shop)
                     elif perintah == "MONSTER MANAGEMENT":
                         array_monster = monster_management(array_monster)
                     elif perintah == "SAVE":
@@ -119,7 +119,7 @@ else:
                         oc_received += int(array_user[user_id][4])
                         array_user[user_id][4] = str(oc_received)
                     elif perintah == "SHOP":
-                        pass
+                        array_monster_shop, array_item_shop, array_monster_inventory, array_item_inventory, array_user = shopmain(array_monster_shop, array_monster, array_item_shop, array_monster_inventory, array_item_inventory, array_user, user_id)
                     elif perintah == "LABORATORY":
                         array_monster_inventory, array_user = laboratory(array_user, array_monster_inventory, array_monster, user_id)
                     elif perintah == "SAVE":
