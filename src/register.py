@@ -113,7 +113,7 @@ def cekValid(username: str, password:str, array_user: list, array_monster: list,
             print("Input tidak valid. Coba pilih ulang.\n")
         monster_pilihan = input("Monster pilihanmu: ")
 
-    while monster_pilihan <= 1 or monster_pilihan >= 3:
+    while monster_pilihan < 1 or monster_pilihan > 3:
         print("input tidak valid. Coba pilih ulang.\n")
         monster_pilihan = input("Monster pilihanmu: ")
         while True:
