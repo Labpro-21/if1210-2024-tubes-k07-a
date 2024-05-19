@@ -2,20 +2,25 @@
 # Writer: Naomi Risaka Sitorus
 # Tanggal: 8 Mei 2024
 
-# KAMUS
-# i: integer
-# new_monster: array of string
-# unique_type: boolean
-# action, monster_type, monster_def_power, monster_atk_power, monster_hp, confirm : string
-
-# ALGORITMA
+# FUNGSI & PROSEDUR
 def is_integer(user_input: str) -> bool:
+# Menerima sebuah masukan berupa string dan mengembalikan True jika input tersebut merupakan sebuah integer serta False jika tidak
+# KAMUS LOKAL
+# -
+# ALGORITMA
     for char in user_input:
         if (ord(char) < ord('0')) or (ord(char) > ord('9')):
             return False
     return True
 
 def monster_management(array_monster: list) -> list:
+# Menampilkan semua monster yang ada dalam game serta menambahkan monster baru ke dalam game berdasarkan masukan user
+# KAMUS LOKAL
+# i: integer
+# new_monster: array of string
+# unique_type: boolean
+# action, monster_type, monster_def_power, monster_atk_power, monster_hp, confirm : string
+# ALGORITMA
     while True:
         print('\nSelamat datang di database monster!')
         print('1. Tampilkan semua monster')

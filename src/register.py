@@ -91,20 +91,43 @@ def cekValid(username: str, password:str, array_user: list, array_monster: list,
         array_user.append(data_user) # menyimpan user baru ke baris paling bawah di array_user
         print()
 
-        # untuk memilih monster awal
-        print("Silahkan pilih salah satu monster sebagai monster awalmu.")
-        batas_awal = 9999
-        batas_akhir = -1
-        for i in range(len(array_monster)):
-            if i != 0 and i <= 3:
-                print(f"{i}"+".",end=" ")
-                print(array_monster[i][1])
-                if i <= batas_awal:
-                    batas_awal = i
-                if i >= batas_akhir:
-                    batas_akhir = i 
-        print()
-        print("Masukkan angka dari monster yang dipilih.")
+    # menyimpan data user baru
+    data_user = [0 for i in range(5)]
+    maks = -1
+    for i in range(1, len(array_user)):
+        if int(array_user[i][0]) < maks:
+                maks = int(array_user[i][0])
+    data_user = [str(int(array_user[maks][0]) + 1), username, password, 'agent', '0']
+    array_user.append(data_user) # menyimpan user baru ke baris paling bawah di array_user
+    print()
+
+    # untuk memilih monster awal
+    print("Silahkan pilih salah satu monster sebagai monster awalmu.")
+    batas_awal = 9999
+    batas_akhir = -1
+    for i in range(len(array_monster)):
+        if i != 0 and i <= 3:
+            print(f"{i}"+".",end=" ")
+            print(array_monster[i][1])
+            if i <= batas_awal:
+                batas_awal = i
+            if i >= batas_akhir:
+                batas_akhir = i 
+    print()
+    print("Masukkan angka dari monster yang dipilih.")
+    monster_pilihan = input("Monster pilihanmu: ")
+    while True:
+        if(is_integer(monster_pilihan)):
+            monster_pilihan = int(monster_pilihan)
+            break
+        elif monster_pilihan == '':
+            print("Monster harus dipilih dan tidak boleh kosong. Masukkan angka untuk monster yang ingin pilih.\n")
+        else:
+            print("Input tidak valid. Coba pilih ulang.\n")
+        monster_pilihan = input("Monster pilihanmu: ")
+
+    while monster_pilihan < 1 or monster_pilihan > 3:
+        print("input tidak valid. Coba pilih ulang.\n")
         monster_pilihan = input("Monster pilihanmu: ")
         while True:
             if(is_integer(monster_pilihan)):

@@ -14,8 +14,10 @@ def arena(monsterarray: list, monster_inventory: list, item_inventory: list, use
     total_damage_taken = 0
     damage_dealt = 0
     damage_taken = 0
+    monster_dipilih, pilihan_monster = pilihmonster(monsterarray, monster_inventory, user_id)
     while True:
-        win, damage_dealt, damage_taken = battle(monsterarray, monster_inventory, item_inventory, user_id, stage, True)
+        win, damage_dealt, damage_taken = battle(monsterarray, monster_inventory, item_inventory, user_id, stage, True, monster_dipilih, pilihan_monster)
+        time.sleep(2)
         total_damage_dealt += damage_dealt
         total_damage_taken += damage_taken
         OC = [30, 50, 100, 200, 500]
@@ -35,6 +37,7 @@ def arena(monsterarray: list, monster_inventory: list, item_inventory: list, use
             print(f"GAME OVER! Sesi latihan berakhir pada stage {stage}!")
             print()
             break
+        time.sleep(2)
     print(f"""
     ============== STATS ==============
     Total hadiah      : {total_OC} OC
