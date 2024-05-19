@@ -2,13 +2,14 @@
 # Writer: Naomi Risaka Sitorus
 # Tanggal: 30 April 2024
 
-# KAMUS
+# FUNGSI & PROSEDUR
+def login(logged_in: bool, user_id: int, array_user: list) -> (bool, str):
+# Memasukkan user ke dalam game dengan menerima masukan berupa username dan password serta mengembalikan variabel logged_in dan user_id 
+# KAMUS LOKAL
 # username, password: string
 # username_found: boolean
 # user_id: integer
-
 # ALGORITMA
-def login(logged_in: bool, user_id: int, array_user: list) -> (bool, str):
     print("Selamat datang Agent! Silahkan melakukan login terlebih dahulu!")
     if not logged_in:
         while True:
