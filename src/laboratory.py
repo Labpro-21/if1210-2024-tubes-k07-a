@@ -2,19 +2,25 @@
 # Writer: Naomi Risaka Sitorus
 # Tanggal: 5 Mei 2024
 
-# KAMUS
-# monster_amt, coin_amt, price, monster_id, upgrade_id, level: integer
-# confirm: string
-# idx: array of integer
-
-# ALGORITMA
+# FUNGSI & PROSEDUR
 def is_integer(user_input: str) -> bool:
+# Menerima sebuah masukan berupa string dan mengembalikan True jika input tersebut merupakan sebuah integer serta False jika tidak
+# KAMUS LOKAL
+# -
+# ALGORITMA
     for char in str(user_input):
         if (ord(char) < ord('0')) or (ord(char) > ord('9')):
             return False
     return True
 
 def laboratory(array_user: list, array_monster_inventory: list, array_monster: list, user_id: int) -> (list, list):
+# Menerima masukan user mengenai monster yang ingin di-upgrade serta meng-upgrade monster jika user memiliki koin yang cukup 
+# serta monster belum berada pada level maksimum
+# KAMUS LOKAL
+# monster_amt, coin_amt, price, monster_id, upgrade_id, level: integer
+# confirm: string
+# idx: array of integer
+# ALGORITMA
     print('Kamu telah memasuki area lab monster!\n')
     while True:
         print("Pilih aksi yang ingin Anda lakukan!\n1. Upgrade monster\n2. Keluar\n")
