@@ -2,15 +2,42 @@
 # Writer: Bertha Soliany Frandi
 # Tanggal: 9 Mei 2024
 
-# KAMUS
-
 # ALGORITMA
 import os
 import time # untuk time.sleep
 # setiap function akan return array yang sudah dimodifikasi (karena hasil permainan)
 
-def save(array_user: list, array_monster: list, array_monster_inventory: list, array_item_inventory: list, array_monster_shop: list, array_item_shop: list):
+def save(array_user: list, array_monster: list, array_monster_inventory: list, array_monster_shop: list, array_item_inventory: list, array_item_shop: list):
+    # KAMUS LOKAL
+    # folder : string
+    # parent_check, folder_check : bool
+    # list_folder : array of character
+    # list_ascii : array of integer
+
+    # ALGORITMA
     folder = input("Masukkan nama folder: ")
+
+    while True:
+        # convert to ASCII
+        # mengubah username dari string ["halo"] menjadi array of character ['h','a','l','o']
+        list_folder = []   # inisialisasi list of character dari nama folder
+        for letter in list_folder:
+            list_folder.append(letter) 
+        # mengubah username menjadi ASCII
+        list_ascii = [0 for i in range(len(folder))] # inisialisasi array ASCII
+        for i in range(len(folder)): 
+            list_ascii[i] = ord(folder[i])
+
+        for i in list_ascii:
+            if i == 34 or i == 42 or i == 47 or i == 58 or i == 60 or i == 62 or i == 63 or i == 92 or i ==124:
+                print(r'Nama folder tidak boleh mengandung karakter sebagai berikut: \/:*?"<>|')
+                folder = input("Masukkan nama folder: ")
+        if folder == "":
+            print("Nama folder tidak boleh kosong. Masukkan ulang nama folder.")
+            folder = input("Masukkan nama folder: ")
+        else:
+            break
+    
     print()
     print("Saving...")
     time.sleep(1.5)
@@ -44,4 +71,9 @@ def save(array_user: list, array_monster: list, array_monster_inventory: list, a
 def write_csv(path: str, data: list):
     with open(path, "w") as file: 
         for row in data:
-            file.write(';'.join(map(str, row)) + '\n')
+            for i in range(len(row)):
+                if row[i] == row[len(row)-1]:
+                    file.write(row[i])
+                else:
+                    file.write(row[i] + ';')
+            file.write('\n')

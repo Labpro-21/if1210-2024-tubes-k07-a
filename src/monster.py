@@ -5,29 +5,8 @@
 # KAMUS
 
 #Algoritma
-from lcg import *
+from src.lcg import *
 # monsterfile = open("D:\ITB\Dasar Pemrograman\Tugas Besar Fix\if1210-2024-tubes-k07-a\data\monster.csv")
-
-def csv_to_array (filepath: str) -> list: # Fungsi untuk mengubah csv menjadi array
-    lines = []
-    with open(filepath, 'r') as file:
-        for row in file:
-            lines.append(row) # Mengubah csv menjadi array per baris
-        
-    array = []
-    for line in lines:
-        row = []
-        kata = ''
-        for elmt in line:
-            if elmt != ';' and elmt != '\n':
-                kata += elmt
-            elif elmt == ';':
-                row.append(kata)
-                kata = ''
-        row.append(kata)
-        array.append(row)
-    
-    return array
 
 def attack_user(attackpower: float) -> float: # Fungsi untuk generate damage dari attack power
     x = generate_number(lcg(a=48271, c=0, m=2**31-1, seed=None), [0,2])
@@ -57,9 +36,9 @@ def defense(defpower: float, enemydamage: float) -> float: # Fungsi untuk menghi
 
 def level_buff(level: int, user_battle_monster: list) -> list: # Buff atribut sesuai level. Digunakan pada saat battle, otomatis mengubah atribut attack, defense, HP menjadi integer
     if level > 1: # Jika level lebih dari 1, atribut dibuff sesuai level, dan diubah menjadi integer
-        user_battle_monster[2] = int(user_battle_monster[2]) + (int(user_battle_monster[2])*((level*10)/100)) # Buff attack
-        user_battle_monster[3] = int(user_battle_monster[3]) + (int(user_battle_monster[3])*((level*10)/100)) # Buff defense
-        user_battle_monster[4] = int(user_battle_monster[4]) + (int(user_battle_monster[4])*((level*10)/100)) # Buff HP
+        user_battle_monster[2] = int(user_battle_monster[2]) + int((int(user_battle_monster[2])*(((level-1)*10)/100))) # Buff attack
+        user_battle_monster[3] = int(user_battle_monster[3]) + int((int(user_battle_monster[3])*(((level-1)*10)/100))) # Buff defense
+        user_battle_monster[4] = int(user_battle_monster[4]) + int((int(user_battle_monster[4])*(((level-1)*10)/100))) # Buff HP
     else: # Jika level 1, atribut tidak dibuff, hanya diubah menjadi integer saja
         user_battle_monster[2] = int(user_battle_monster[2])
         user_battle_monster[3] = int(user_battle_monster[3])
@@ -115,7 +94,7 @@ def gambar_monster(id: str):
                       ..                             .++++*                               
                                                        .--.                               
 """)
-    elif id == "2":
+    elif id == "4":
         print(r"""                                                                                 
                                                               -=: .::                     
                                                            .:=--+--+:..                   
@@ -188,7 +167,7 @@ def gambar_monster(id: str):
                                                      .+****+-                             
                                                         .-                                
 """)
-    elif id == "4":
+    elif id == "2":
         print(r"""
                                  .-*#%@@@@@@@@@@@@@%*=:                                   
                               -#%@@@@@@@@@@@@@@@@@@@@@@@#+:                               

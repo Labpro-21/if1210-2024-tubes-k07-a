@@ -2,17 +2,17 @@
 # Writer: Bertha Soliany Frandi
 # Tanggal: 6 Mei 2024
 
-# ALGORITMA
-from save import save
+def exit() -> bool:
+    # KAMUS LOKAL
+    # reassure : string
 
-def exit(array_user: list, array_monster: list, array_monster_inventory: list, array_item_inventory: list, array_monster_shop: list, array_item_shop: list):
-    reassure = input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (iya/tidak) ")
+    # ALGORITMA
+    reassure = input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (Y/N) ").upper()
     while True:
-        if reassure == "iya" or reassure == "IYA" or reassure == "Iya":
-            save(array_user, array_monster, array_monster_inventory, array_item_inventory, array_monster_shop, array_item_shop)
-            break
-        elif reassure == "tidak" or reassure == "TIDAK" or reassure == "Tidak":
-            break
+        if reassure == "Y":
+            return True            
+        elif reassure == "N":
+            return False
         else:
-            print("Input tidak valid")
-            reassure = input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (iya/tidak) ")
+            print("Input tidak valid! Masukkan ulang input!")
+            reassure = input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (Y/N) ").upper()
