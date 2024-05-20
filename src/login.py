@@ -10,8 +10,8 @@ def login(logged_in: bool, user_id: int, array_user: list) -> (bool, str):
 # username_found: boolean
 # user_id: integer
 # ALGORITMA
-    print("Selamat datang Agent! Silahkan melakukan login terlebih dahulu!")
     if not logged_in:
+        print("Selamat datang Agent! Silahkan melakukan login terlebih dahulu!")
         while True:
             print("Pilih aksi dibawah ini:")
             print("1. Login\n2. Keluar\n")
