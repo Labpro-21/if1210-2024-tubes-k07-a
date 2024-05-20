@@ -64,6 +64,8 @@ def inventory(user: list, item_inventory: list, monster_inventory: list, monster
                         break
                     else:
                         print("Input tidak valid! Masukkan angka yang sesuai dengan jumlah jenis barang yang Anda punya!")
+                else:
+                    print('Input tidak valid! Masukan hanya bisa berupa angka atau perintah "keluar"!')
                 print("\nKetikkan id untuk menampilkan detail item: ",end="")
                 idx = input()
             if idx == "keluar":
