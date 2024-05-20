@@ -87,39 +87,35 @@ def buy_monster(data_monster_inventory: list, data_monster: list, data_monstersh
     item_id = input("Masukkan ID monster: ")
     while True:
         if(is_integer(item_id)):
-            if has_monsterinven(str(user_id),str(item_id),data_monster_inventory):
+            while has_monsterinven(str(user_id),str(item_id),data_monster_inventory):
                 print("Anda sudah memiliki monster ini, masukkan ID lain!")
-                return data_monster_inventory, data_monstershop, data_owca
-                # apabila user sudah memiliki monster tersebut, maka akan dilakukan return
-            else:
-                break
-        item_id = input("Masukkan ID monster: ")
-    item_id = int(item_id)
+                item_id = input("Masukkan ID monster: ")
+            item_id = int(item_id)
 
-    for i in range(1, len(data_monstershop)):
-        id = int(data_monstershop[i][0])  
-        type = data_monster[i][1]
-        stok = int(data_monstershop[i][1]) 
-        price = int(data_monstershop[i][2])  
-        owca = int(data_owca[user_id][4])  
-    
-        if item_id == id:
-            if(stok>0):
-                if owca >= price:
-                    print(f"Kamu berhasil membeli {type}. Item sudah masuk ke inventory-mu! ")
-                    print(f"Sisa O.W.C.A. Coin-mu {owca-price}.")
-                    owca -= price
-                    data_owca[user_id][4] = str(owca)
-                    stok -= 1
-                    data_monstershop[i][1] = str(stok)
-                    data_monster_inventory.append([str(user_id),str(id),str(1)])
+        for i in range(1, len(data_monstershop)):
+            id = int(data_monstershop[i][0])  
+            type = data_monster[i][1]
+            stok = int(data_monstershop[i][1]) 
+            price = int(data_monstershop[i][2])  
+            owca = int(data_owca[user_id][4])  
+        
+            if item_id == id:
+                if(stok>0):
+                    if owca >= price:
+                        print(f'Kamu berhasil membeli {type}. Item sudah masuk ke inventory-mu!')
+                        print(f"Sisa O.W.C.A. Coin-mu {owca-price}.")
+                        owca -= price
+                        data_owca[user_id][4] = str(owca)
+                        stok -= 1
+                        data_monstershop[i][1] = str(stok)
+                        data_monster_inventory.append([str(user_id),str(id),str(1)])
+                    else:
+                        print("O.W.C.A Coin-mu kurang.")
                 else:
-                    print("O.W.C.A Coin-mu kurang")
-            else:
-                print("Stok monster tidak mencukupi.")
-            return data_monster_inventory, data_monstershop, data_owca
-    print("Masukkan anda tidak valid.")
-    return data_monster_inventory, data_monstershop, data_owca
+                    print("Stok monster tidak mencukupi.")
+                return data_monster_inventory, data_monstershop, data_owca
+        print("Masukkan anda tidak valid.")
+        return data_monster_inventory, data_monstershop, data_owca
 
 def buy_potion(data_potion_inventory: list, data_potionshop: list,  data_owca: list, user_id: int):         
     table(read_filepotion(data_potionshop))
@@ -152,7 +148,7 @@ def buy_potion(data_potion_inventory: list, data_potionshop: list,  data_owca: l
                 harga_1 = int(harga_1)
                 jumlah = quantity * harga_1
                 if owca >= jumlah:
-                    print(f"kamu berhasil membeli {quantity} {type_1} Potion. Item sudah masuk ke inventory-mu!")
+                    print(f"Kamu berhasil membeli {quantity} {type_1} Potion. Item sudah masuk ke inventory-mu!")
                     print(f"Sisa O.W.C.A. Coin-mu {owca-jumlah}.")
                     owca -= jumlah
                     data_owca[user_id][4] = str(owca)
@@ -164,8 +160,9 @@ def buy_potion(data_potion_inventory: list, data_potionshop: list,  data_owca: l
                                 stok = int(data_potion_inventory[k][1])
                                 stok += quantity
                                 data_potion_inventory[k][1] = str(stok)
-                                return data_potion_inventory, data_potionshop, data_owca # langsung return kalau sudah punya
-                    data_potion_inventory.append(str(user_id),str(type_1),str(quantity)) # incase belum punya potion tersebut
+                                return (data_potion_inventory, data_potionshop, data_owca) # langsung return kalau sudah punya
+                    new_potion = [str(user_id),str(type_1),str(quantity)]
+                    data_potion_inventory.append(new_potion) # incase belum punya potion tersebut
                 else: # owca < jumlah
                     print("O.W.C.A Coin-mu kurang.")
             return data_potion_inventory, data_potionshop, data_owca

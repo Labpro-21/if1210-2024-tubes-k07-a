@@ -53,7 +53,10 @@ def use_potion(user_id: int, item_inventory: list, status_potion: list, nama_mon
             return item_inventory, status_potion, 0 
         while True:
             potion_dipilih = input("Pilih potion untuk diminum: ")
-            if(is_integer(potion_dipilih)):
+            if potion_dipilih == '':
+                print("Input tidak boleh kosong!")
+                continue
+            elif(is_integer(potion_dipilih)):
                 potion_dipilih = int(potion_dipilih)
                 break
             print("Pilihan nomor tidak tersedia!") # input tidak valid

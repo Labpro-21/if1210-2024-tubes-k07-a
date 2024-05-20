@@ -63,7 +63,7 @@ def register(logged_in: bool, array_user: list, array_monster: list, array_monst
                             print(f"Username sudah terpakai, silahkan gunakan username lain.\n")
                             ada = True
                         else: 
-                            ada == False
+                            ada = False
 
                     if ada == False:
                         # melakukan pengecekan terhadap password
