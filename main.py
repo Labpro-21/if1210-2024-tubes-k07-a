@@ -72,6 +72,9 @@ else:
                     keluar = exit()
                     if keluar == True:
                         save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
+                        print("Sampai jumpa kembali!")
+                    elif keluar == False:
+                        print("Sampai jumpa kembali!")
                     break
                 else:
                     print("Perintah tidak valid! Pastikan input sudah benar.")
@@ -98,6 +101,9 @@ else:
                         keluar = exit()
                         if keluar == True:
                             save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
+                            print("Sampai jumpa kembali admin!")
+                        elif keluar == False:
+                            print("Sampai jumpa kembali admin!")
                         break
                     else:
                         print("Perintah tidak valid!")
@@ -128,6 +134,9 @@ else:
                         keluar = exit()
                         if keluar == True:
                             save(array_user, array_monster, array_monster_inventory, array_monster_shop, array_item_inventory, array_item_shop)
+                            print("Sampai jumpa kembali Agent!")
+                        elif keluar == False:
+                            print("Sampai jumpa kembali Agent!")
                         break
                     else:
                         print("Perintah tidak valid!")
