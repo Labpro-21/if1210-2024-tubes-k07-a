@@ -72,8 +72,8 @@ def write_csv(path: str, data: list):
     with open(path, "w") as file: 
         for row in data:
             for i in range(len(row)):
-                if row[i] == row[len(row)-1]:
+                if i == len(row)-1:
                     file.write(row[i])
-                else:
+                elif i < len(row)-1:
                     file.write(row[i] + ';')
             file.write('\n')
