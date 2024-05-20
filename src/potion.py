@@ -35,8 +35,8 @@ def pilih_potion(user_id: int, item_inventory: list) -> list:
                     txt1 = "Healing"
                     txt2 = "Restores 25% Health"
                 print(f"{count}. {txt1} Potion (Qty: {item_inventory[i][2]}) - {txt2}")
-                pilihan_potion.append(str(item_inventory[i]).copy())  
-                pilihan_potion[count-1].append(str(i)) # menyimpan index di item_inventory untuk memudahkan akses
+                pilihan_potion.append(item_inventory[i].copy())  
+                pilihan_potion[count-1].append(i) # menyimpan index di item_inventory untuk memudahkan akses
                 count += 1
     if(count==1):
         print("Anda tidak memiliki Potion dalam inventory!")  
