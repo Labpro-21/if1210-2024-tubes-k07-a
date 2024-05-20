@@ -49,12 +49,15 @@ def inventory(user: list, item_inventory: list, monster_inventory: list, monster
                         detail_item = ["Potion",tipe,item_inventory[i][2]]
                         user_inventory.append(detail_item)
                         count += 1
+            print('Ketik "keluar" untuk keluar dari Inventory')
             print()
             print("Ketikkan id untuk menampilkan detail item: ",end="")
+            idx = input()
             while(True):
-                idx = input()
                 if idx == "":
                     print("Input tidak boleh kosong!")
+                elif idx.lower() == "keluar":
+                    break
                 elif(is_integer(idx)):
                     idx = int(idx)
                     if((idx>=1)and(idx<count)):
@@ -62,6 +65,10 @@ def inventory(user: list, item_inventory: list, monster_inventory: list, monster
                     else:
                         print("Input tidak valid! Masukkan angka yang sesuai dengan jumlah jenis barang yang Anda punya!")
                 print("\nKetikkan id untuk menampilkan detail item: ",end="")
+                idx = input()
+            if idx == "keluar":
+                print("Anda keluar dari Inventory!")
+                break
             print()
             if(user_inventory[idx-1][0]=="Monster"):
                 print(f"""Monster
