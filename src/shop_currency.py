@@ -90,7 +90,7 @@ def buy_monster(data_monster_inventory: list, data_monster: list, data_monstersh
             while has_monsterinven(str(user_id),str(item_id),data_monster_inventory):
                 print("Anda sudah memiliki monster ini, masukkan ID lain!")
                 item_id = input("Masukkan ID monster: ")
-        item_id = int(item_id)
+            item_id = int(item_id)
 
         for i in range(1, len(data_monstershop)):
             id = int(data_monstershop[i][0])  
