@@ -165,7 +165,8 @@ def buy_potion(data_potion_inventory: list, data_potionshop: list,  data_owca: l
                                 stok += quantity
                                 data_potion_inventory[k][1] = str(stok)
                                 return data_potion_inventory, data_potionshop, data_owca # langsung return kalau sudah punya
-                    data_potion_inventory.append(str(user_id),str(type_1),str(quantity)) # incase belum punya potion tersebut
+                    new_potion = [str(user_id),str(type_1),str(quantity)]
+                    data_potion_inventory.append(new_potion)
                 else: # owca < jumlah
                     print("O.W.C.A Coin-mu kurang.")
             return data_potion_inventory, data_potionshop, data_owca
